@@ -26,6 +26,10 @@ div {
 body {
   width: 100%;
   margin: 1rem;
+  font-size: 1.6rem;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  min-height: 100vh;
 }
 
 html {
@@ -46,58 +50,6 @@ html:focus-within {
 *::before,
 *::after {
   box-sizing: inherit;
-}
-
-/* LAYOUT DEBUG */
-/* { */
-/*       outline: 3px solid orange; */
-/*       background-color: hsla(120, 50%, 50%, 0.18); */
-/* } */
-
-body {
-  font-size: 1.6rem;
-  /* margin: 10px; */
-  text-rendering: optimizeSpeed;
-  line-height: 1.5;
-  min-height: 100vh;
-}
-
-/* Try to keep your margins going in one direction to avoid margin collapase or grounding. I switch all the top margins off to avoid this issue. */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-ul,
-ol,
-li,
-dl,
-dt,
-dd,
-blockquote,
-address,
-article,
-aside,
-details,
-dialogue,
-fieldset,
-figcaption,
-figure,
-footer,
-form,
-header,
-hr,
-main,
-nav,
-pre,
-section,
-table,
-p {
-  /* margin-top: 10px; */
-  margin-block-start: 0;
-  padding: 0;
-  margin: 0;
 }
 
 a {
