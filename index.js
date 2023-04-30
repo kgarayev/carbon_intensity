@@ -7,10 +7,31 @@ let apiData;
 // select the html element(s)
 const container = document.getElementById("container");
 
+// user input
+let userInput = ``;
+
 // to simplify console.log command
 const { log } = console;
 
 // get data from the user
+document.addEventListener("input", (event) => {
+  userInput = event.target.value;
+  log(userInput);
+});
+
+document.getElementById("button").addEventListener("click", (event) => {
+  event.preventDefault();
+  userInput = convert(userInput);
+  log("shortened input is:", userInput);
+});
+
+// validate data from the user
+
+// convert the full postcode into the outward postcode
+const convert = (fullPostcode) => {
+  let outwardPostcode = fullPostcode.split(" ")[0];
+  return outwardPostcode;
+};
 
 // a function to get data from the API
 

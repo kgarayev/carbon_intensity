@@ -14,15 +14,16 @@
   <body>
     <header>
       <div>
-        <form action="GET">
-          <p>Type Your Postcode</p>
-          <input type="text" />
+        <form id="postcode" action="" method="post">
+          <label for="postcode" class="text-info">Type your Postcode:</label>
+          <input type="text" name="postcode" />
+          <button id="button">Check</button>
         </form>
       </div>
     </header>
 
     <main>
-      <div>Main Area To View Stats</div>
+      <div id="container">Main Area To View Stats</div>
     </main>
 
     <footer>
