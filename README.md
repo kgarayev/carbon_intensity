@@ -1,2 +1,2 @@
 # carbon_intensity
-Carbon INtensity and Electricity Generation Mix of Your Area
+Carbon Intensity and Electricity Generation Mix of Your Area
