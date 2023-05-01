@@ -23,13 +23,13 @@
 
         <form id="regions" action="" method="post">
           <label for="regions">Select a UK Region:</label>
-          <select id="regionsList">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+          <select id="regionsList" name="regions">
+            <option value="0" disabled selected>Select Region</option>
           </select>
-          <button id="compareButton">Compare</button>
+          <button id="compareButton" name="regions">Compare</button>
         </form>
+
+        <button id="clearButton">Clear All</button>
 
         <p id="postcodeError"></p>
       </div>

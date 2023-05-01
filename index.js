@@ -1,8 +1,22 @@
-// set a variable with the API URL
-const API_URL = `https://api.carbonintensity.org.uk/regional/postcode/{postcode}`;
+import { regions } from "./static.js";
 
-// variable for the data from API
-let apiData;
+// set a variable with the API URL for POSTCODES
+const POSTCODE_API_URL = `https://api.carbonintensity.org.uk/regional/postcode/{postcode}`;
+
+// set a regional API URL
+const REGIONAL_API_URL = `https://api.carbonintensity.org.uk/regional/regionid/{regionid}`;
+
+// set a national API URL for intensity
+const NATIONAL_API_URL_INTENSITY = `https://api.carbonintensity.org.uk/intensity`;
+
+// set a national API URL for generation mix
+const NATIONAL_API_URL_GENERATION = `https://api.carbonintensity.org.uk/generation`;
+
+// variable for the local data from API
+let localApiData;
+
+// variable for the national data from API
+let nationalApiData;
 
 // select the html element(s)
 const container = document.getElementById("container");
@@ -39,43 +53,66 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
         "Please enter a valid UK postcode";
     } else {
       finalPostcode = response.slice(0, -3);
-      log(finalPostcode);
-      writeData();
+      //   log(finalPostcode);
+      writeData(finalPostcode, POSTCODE_API_URL);
     }
   });
 });
 
 // a function to get data from the API
-const getData = async (postcode) => {
-  // talk to the api
-  const { data } = await axios.get(API_URL.replace("{postcode}", postcode));
+const getData = async (locationData, url) => {
+  const copiedUrl = url.slice();
+  const splitUrl = copiedUrl.split("/");
+  const replaceable = splitUrl[splitUrl.length - 1];
 
-  apiData = data.data[0];
-  log(apiData.data[0].generationmix);
-  return apiData;
+  //   talk to the api
+  if (locationData === "N") {
+    // for national data
+    // get the data from the api
+    let nationalIntensity = await axios.get(NATIONAL_API_URL_INTENSITY);
+    let nationalGeneration = await axios.get(NATIONAL_API_URL_GENERATION);
+
+    // move the data such that to create a compatible data structure
+    nationalIntensity = nationalIntensity.data.data[0].intensity;
+    nationalGeneration = nationalGeneration.data.data;
+    nationalGeneration["intensity"] = nationalIntensity;
+    nationalApiData = { shortname: "National", data: [nationalGeneration] };
+
+    log(nationalApiData);
+    return nationalApiData;
+  } else {
+    // for regional or local data
+    const { data } = await axios.get(url.replace(replaceable, locationData));
+
+    localApiData = data.data[0];
+    log(localApiData);
+    return localApiData;
+  }
 };
 
 // check and run the data function
-const writeData = async () => {
-  if (finalPostcode.length > 0) {
-    const data = await getData(finalPostcode);
+const writeData = async (locationData, url) => {
+  if (locationData) {
+    const data = await getData(locationData, url);
     displayData(data);
     return;
-  } else {
-    return;
   }
+  return;
 };
 
 // display the obtained data for the user
 const displayData = (data) => {
   if (data) {
     const region = data.shortname;
-    const fromDate = data.data[0].from;
-    const toDate = data.data[0].to;
-    const intensity = data.data[0].intensity;
-    const generationMix = data.data[0].generationmix;
+    const stats = data.data[0];
+    const fromDate = stats.from;
+    const toDate = stats.to;
+    const intensity = stats.intensity;
+    const generationMix = stats.generationmix;
 
-    log(fromDate);
+    // log(fromDate);
+
+    document.getElementById(container.id).innerHTML = "";
 
     updateDom(container.id, `h4`, `Region: ${region}`);
     updateDom(container.id, `h5`, `Date & Time: ${fromDate} - ${toDate}`);
@@ -83,7 +120,7 @@ const displayData = (data) => {
     updateDom(container.id, `p`, `Index: ${intensity.index}`);
 
     generationMix.forEach((item) => {
-      log(item);
+      //   log(item);
       for (let key in item) {
         if (key === "fuel") {
           updateDom(container.id, `h5`, `Fuel Type: `);
@@ -93,7 +130,7 @@ const displayData = (data) => {
           updateDom(container.id, `p`, `${item[key]}%`);
         }
 
-        log(key, item[key]);
+        // log(key, item[key]);
       }
     });
   }
@@ -122,8 +159,8 @@ const geoToPostcode = async ({ coords }) => {
     .toUpperCase()
     .slice(0, -3);
 
-  log(finalPostcode);
-  writeData();
+  //   log(finalPostcode);
+  writeData(finalPostcode, POSTCODE_API_URL);
 };
 
 const error = (error) => {
@@ -136,10 +173,50 @@ const options = {
   timeout: 2000,
 };
 
+// geolocation button
+const geolocationButton = document.getElementById("geolocationButton");
+
 // get the geolocation of the user
-document
-  .getElementById("geolocationButton")
-  .addEventListener("click", (event) => {
-    event.preventDefault();
-    navigator.geolocation.getCurrentPosition(geoToPostcode, error, options);
-  });
+geolocationButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(geoToPostcode, error, options);
+});
+
+// selecting a select tag in html
+const regionDropDown = document.getElementById("regionsList");
+
+// dynamically setting the region options in html
+const setRegions = () => {
+  for (const regionId in regions) {
+    const option = document.createElement("option");
+    option.value = regionId;
+    option.text = regions[regionId];
+    regionDropDown.add(option);
+  }
+};
+
+setRegions();
+
+// selecting the compare button in html
+const compareButton = document.getElementById("compareButton");
+
+// listen to compare button and call the API function
+compareButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  const selectedOption = regionDropDown.value;
+  //   log(selectedOption);
+
+  if (selectedOption === "N") {
+    writeData(selectedOption, NATIONAL_API_URL_INTENSITY);
+  } else {
+    writeData(selectedOption, REGIONAL_API_URL);
+  }
+});
+
+// selecting clear button from html
+const clearButton = document.getElementById("clearButton");
+
+clearButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  container.innerHTML = "";
+});
