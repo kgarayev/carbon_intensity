@@ -18,3 +18,38 @@ export const regions = {
   17: "Wales",
   N: "National",
 };
+
+// set a variable with the API URL for POSTCODES
+export const POSTCODE_API_URL = `https://api.carbonintensity.org.uk/regional/postcode/{postcode}`;
+
+// set a regional API URL
+export const REGIONAL_API_URL = `https://api.carbonintensity.org.uk/regional/regionid/{regionid}`;
+
+// set a national API URL for intensity
+export const NATIONAL_API_URL_INTENSITY = `https://api.carbonintensity.org.uk/intensity`;
+
+// set a national API URL for generation mix
+export const NATIONAL_API_URL_GENERATION = `https://api.carbonintensity.org.uk/generation`;
+
+// set the geocoding API
+export const GEOCODING_API_URL = `https://geocode.maps.co/search?q={address}`;
+
+export const GEO_TO_POSTCODE_API_URL = `https://api.postcodes.io/postcodes?lon={longitude}&lat={latitude}`;
+
+// select the html element(s)
+export const container = document.getElementById("container");
+
+// geolocation button
+export const geolocationButton = document.getElementById("geolocationButton");
+
+// selecting a select tag in html
+export const regionDropDown = document.getElementById("regionsList");
+
+// selecting the compare button in html
+export const compareButton = document.getElementById("compareButton");
+
+// selecting clear button from html
+export const clearButton = document.getElementById("clearButton");
+
+// selecting error message element
+export const errorMessage = document.getElementById("errorMessage");

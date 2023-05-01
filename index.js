@@ -1,19 +1,24 @@
-import { regions } from "./static.js";
+import {
+  regions,
+  POSTCODE_API_URL,
+  REGIONAL_API_URL,
+  NATIONAL_API_URL_INTENSITY,
+  NATIONAL_API_URL_GENERATION,
+  GEOCODING_API_URL,
+  GEO_TO_POSTCODE_API_URL,
+  container,
+  geolocationButton,
+  regionDropDown,
+  compareButton,
+  clearButton,
+  errorMessage,
+} from "./static.js";
 
-// set a variable with the API URL for POSTCODES
-const POSTCODE_API_URL = `https://api.carbonintensity.org.uk/regional/postcode/{postcode}`;
+// final postcode in suitable format
+let finalPostcode;
 
-// set a regional API URL
-const REGIONAL_API_URL = `https://api.carbonintensity.org.uk/regional/regionid/{regionid}`;
-
-// set a national API URL for intensity
-const NATIONAL_API_URL_INTENSITY = `https://api.carbonintensity.org.uk/intensity`;
-
-// set a national API URL for generation mix
-const NATIONAL_API_URL_GENERATION = `https://api.carbonintensity.org.uk/generation`;
-
-// set the geocoding API
-const GEOCODING_API_URL = `https://geocode.maps.co/search?q={address}`;
+// user input
+let userInput;
 
 // variable for the local data from API
 let localApiData;
@@ -21,17 +26,7 @@ let localApiData;
 // variable for the national data from API
 let nationalApiData;
 
-// select the html element(s)
-const container = document.getElementById("container");
-
-// user input
-let userInput = ``;
-
-// final postcode in suitable format
-let finalPostcode = ``;
-
-// to simplify console.log command
-const { log } = console;
+import { log } from "./helpers.js";
 
 // get data from the user
 document.addEventListener("input", (event) => {
@@ -47,16 +42,14 @@ const schema = Joi.string().regex(
 const postcodeValidator = (input) => {
   //   send the data to joi and validate
   Joi.validate(input, schema, { abortEarly: false }, (error, response) => {
-    log(error, response);
-
     if (error) {
-      document.getElementById("postcodeError").innerHTML =
-        "Please enter a valid UK postcode or an area name";
+      return false;
     } else {
       let postcodeCopy = finalPostcode.slice();
       postcodeCopy = response.replace(/\s+/g, "").slice(0, -3);
       //   log(finalPostcode);
       writeData(postcodeCopy, POSTCODE_API_URL);
+      return true;
     }
   });
 };
@@ -67,18 +60,41 @@ const locationCheck = async (input) => {
   const { data } = await axios.get(
     GEOCODING_API_URL.replace(`{address}`, input)
   );
-  log(data);
+  if (data.length > 0) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].display_name.includes("United Kingdom")) {
+        const lat = data[i].lat;
+        const long = data[i].lon;
+        // log(longitude, latitude);
+        const coordData = { coords: { latitude: lat, longitude: long } };
+        // const { lat, long } = coords;
+        // log(lat, long);
+        geoToPostcode(coordData);
+        return;
+        // return coords;
+      }
+    }
+    errorMessage.innerHTML = "Please enter a valid UK area name or postcode";
+  } else {
+    errorMessage.innerHTML = "Please enter a valid UK area name or postcode";
+  }
+
+  // log(data[0].display_name.includes("United Kingdom"));
 };
 
-locationCheck("west drayton");
+// locationCheck("paris");
 
 // submit the final user input and validate
 document.getElementById("checkButton").addEventListener("click", (event) => {
   event.preventDefault();
 
-  // check if the input is a valid UK postcode
-
-  // if not a valid postcode, pass it through geocode API to check if it is a valid location and it is in the UK
+  if (userInput) {
+    // check if the input is a valid UK postcode
+    if (!postcodeValidator(userInput)) {
+      // if not a valid postcode, pass it through geocode API to check if it is a valid location and it is in the UK
+      locationCheck(userInput);
+    }
+  }
 });
 
 // a function to get data from the API
@@ -104,9 +120,9 @@ const getData = async (locationData, url) => {
     return nationalApiData;
   } else {
     // for regional or local data
-    const { data } = await axios.get(url.replace(replaceable, locationData));
+    const { data: d } = await axios.get(url.replace(replaceable, locationData));
 
-    localApiData = data.data[0];
+    localApiData = d.data[0];
     log(localApiData);
     return localApiData;
   }
@@ -171,9 +187,11 @@ const geoToPostcode = async ({ coords }) => {
   const { latitude, longitude } = coords;
   log(latitude, longitude);
 
-  const { data } = await axios.get(
-    `https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}`
-  );
+  let urlCopy = GEO_TO_POSTCODE_API_URL.slice()
+    .replace("{longitude}", longitude)
+    .replace("{latitude}", latitude);
+
+  const { data } = await axios.get(urlCopy);
 
   finalPostcode = data.result[0].postcode
     .trim()
@@ -181,7 +199,7 @@ const geoToPostcode = async ({ coords }) => {
     .toUpperCase()
     .slice(0, -3);
 
-  //   log(finalPostcode);
+  log(finalPostcode);
   writeData(finalPostcode, POSTCODE_API_URL);
 };
 
@@ -195,17 +213,11 @@ const options = {
   timeout: 2000,
 };
 
-// geolocation button
-const geolocationButton = document.getElementById("geolocationButton");
-
 // get the geolocation of the user
 geolocationButton.addEventListener("click", (event) => {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(geoToPostcode, error, options);
 });
-
-// selecting a select tag in html
-const regionDropDown = document.getElementById("regionsList");
 
 // dynamically setting the region options in html
 const setRegions = () => {
@@ -219,9 +231,6 @@ const setRegions = () => {
 
 setRegions();
 
-// selecting the compare button in html
-const compareButton = document.getElementById("compareButton");
-
 // listen to compare button and call the API function
 compareButton.addEventListener("click", (event) => {
   event.preventDefault();
@@ -234,9 +243,6 @@ compareButton.addEventListener("click", (event) => {
     writeData(selectedOption, REGIONAL_API_URL);
   }
 });
-
-// selecting clear button from html
-const clearButton = document.getElementById("clearButton");
 
 clearButton.addEventListener("click", (event) => {
   event.preventDefault();
