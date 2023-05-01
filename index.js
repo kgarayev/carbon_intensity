@@ -27,7 +27,7 @@ const schema = Joi.string().regex(
 );
 
 // submit the final user input and validate
-document.getElementById("button").addEventListener("click", (event) => {
+document.getElementById("checkButton").addEventListener("click", (event) => {
   event.preventDefault();
 
   //   send the data to joi and validate
@@ -51,7 +51,7 @@ const getData = async (postcode) => {
   const { data } = await axios.get(API_URL.replace("{postcode}", postcode));
 
   apiData = data.data[0];
-  log(apiData.shortname);
+  log(apiData.data[0].generationmix);
   return apiData;
 };
 
@@ -70,18 +70,41 @@ const writeData = async () => {
 const displayData = (data) => {
   if (data) {
     const region = data.shortname;
+    const fromDate = data.data[0].from;
+    const toDate = data.data[0].to;
     const intensity = data.data[0].intensity;
     const generationMix = data.data[0].generationmix;
 
-    const html1 = `   <h4>Region: ${region}</h4>
-                          <h4>Carbon Intensity</h4>
-                          <p>Forecast: ${intensity.forecast}<p>
-                          <p>Index: ${intensity.index}<p>
-                          <h4>Generation Mix</h4>
-                          <p><p>`;
+    log(fromDate);
 
-    container.innerHTML = html1;
+    updateDom(container.id, `h4`, `Region: ${region}`);
+    updateDom(container.id, `h5`, `Date & Time: ${fromDate} - ${toDate}`);
+    updateDom(container.id, `p`, `Forecast: ${intensity.forecast}`);
+    updateDom(container.id, `p`, `Index: ${intensity.index}`);
+
+    generationMix.forEach((item) => {
+      log(item);
+      for (let key in item) {
+        if (key === "fuel") {
+          updateDom(container.id, `h5`, `Fuel Type: `);
+          updateDom(container.id, `p`, `${item[key].toUpperCase()}`);
+        } else {
+          updateDom(container.id, `h5`, `Percentage of Mix: `);
+          updateDom(container.id, `p`, `${item[key]}%`);
+        }
+
+        log(key, item[key]);
+      }
+    });
   }
+};
+
+// a function to programmatically update the DOM
+const updateDom = (id, tag, text) => {
+  const content = document.createTextNode(text);
+  const element = document.createElement(tag);
+  element.append(content);
+  document.getElementById(id).append(element);
 };
 
 // update the data for the user

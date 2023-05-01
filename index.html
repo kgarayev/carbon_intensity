@@ -15,20 +15,32 @@
     <header>
       <div>
         <form id="postcode" action="" method="post">
-          <label for="postcode" class="text-info">Type your Postcode:</label>
+          <label for="postcode">Type your Postcode:</label>
           <input type="text" name="postcode" />
-          <button id="button">Check</button>
+          <button id="geolocationButton">Current Location</button>
+          <button id="checkButton">Check</button>
         </form>
+
+        <form id="regions" action="" method="post">
+          <label for="regions">Select a UK Region:</label>
+          <select id="regionsList">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+          <button id="compareButton">Compare</button>
+        </form>
+
         <p id="postcodeError"></p>
       </div>
     </header>
 
     <main>
-      <div id="container">Main Area To View Stats</div>
+      <div id="container"></div>
     </main>
 
     <footer>
-      <p>copyright etc</p>
+      <p></p>
     </footer>
   </body>
 </html>
