@@ -12,6 +12,9 @@ const NATIONAL_API_URL_INTENSITY = `https://api.carbonintensity.org.uk/intensity
 // set a national API URL for generation mix
 const NATIONAL_API_URL_GENERATION = `https://api.carbonintensity.org.uk/generation`;
 
+// set the geocoding API
+const GEOCODING_API_URL = `https://geocode.maps.co/search?q={address}`;
+
 // variable for the local data from API
 let localApiData;
 
@@ -32,31 +35,50 @@ const { log } = console;
 
 // get data from the user
 document.addEventListener("input", (event) => {
-  userInput = event.target.value.trim().replace(/\s+/g, "").toUpperCase();
+  userInput = event.target.value.trim();
 });
 
-// create a schema for validation
+// create a postcode schema for validation
 const schema = Joi.string().regex(
   /^([A-Z]{1,2}\d{1,2}[A-Z]?)\s*(\d[A-Z]{2})$/i
 );
+
+// a joi validator function for postcode
+const postcodeValidator = (input) => {
+  //   send the data to joi and validate
+  Joi.validate(input, schema, { abortEarly: false }, (error, response) => {
+    log(error, response);
+
+    if (error) {
+      document.getElementById("postcodeError").innerHTML =
+        "Please enter a valid UK postcode or an area name";
+    } else {
+      let postcodeCopy = finalPostcode.slice();
+      postcodeCopy = response.replace(/\s+/g, "").slice(0, -3);
+      //   log(finalPostcode);
+      writeData(postcodeCopy, POSTCODE_API_URL);
+    }
+  });
+};
+
+// a function to check whether the user input is a valid location and whether it is in the UK
+const locationCheck = async (input) => {
+  // run it through the api
+  const { data } = await axios.get(
+    GEOCODING_API_URL.replace(`{address}`, input)
+  );
+  log(data);
+};
+
+locationCheck("west drayton");
 
 // submit the final user input and validate
 document.getElementById("checkButton").addEventListener("click", (event) => {
   event.preventDefault();
 
-  //   send the data to joi and validate
-  Joi.validate(userInput, schema, { abortEarly: false }, (error, response) => {
-    log(error, response);
+  // check if the input is a valid UK postcode
 
-    if (error) {
-      document.getElementById("postcodeError").innerHTML =
-        "Please enter a valid UK postcode";
-    } else {
-      finalPostcode = response.slice(0, -3);
-      //   log(finalPostcode);
-      writeData(finalPostcode, POSTCODE_API_URL);
-    }
-  });
+  // if not a valid postcode, pass it through geocode API to check if it is a valid location and it is in the UK
 });
 
 // a function to get data from the API
