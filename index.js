@@ -10,7 +10,7 @@ const container = document.getElementById("container");
 // user input
 let userInput = ``;
 
-// final postcode obtained from the user
+// final postcode in suitable format
 let finalPostcode = ``;
 
 // to simplify console.log command
@@ -107,4 +107,39 @@ const updateDom = (id, tag, text) => {
   document.getElementById(id).append(element);
 };
 
-// update the data for the user
+// get the coordinates, convert them to postcode and write the data to the DOM
+const geoToPostcode = async ({ coords }) => {
+  const { latitude, longitude } = coords;
+  log(latitude, longitude);
+
+  const { data } = await axios.get(
+    `https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}`
+  );
+
+  finalPostcode = data.result[0].postcode
+    .trim()
+    .replace(/\s+/g, "")
+    .toUpperCase()
+    .slice(0, -3);
+
+  log(finalPostcode);
+  writeData();
+};
+
+const error = (error) => {
+  console.log(error);
+};
+
+const options = {
+  enableHighAccuracy: true,
+  maximumAge: 0,
+  timeout: 2000,
+};
+
+// get the geolocation of the user
+document
+  .getElementById("geolocationButton")
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+    navigator.geolocation.getCurrentPosition(geoToPostcode, error, options);
+  });
