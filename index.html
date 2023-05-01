@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="./styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/joi-browser@13.4.0/dist/joi-browser.min.js"></script>
-    <script type="module" src="./helpers.js"></script>
     <script type="module" src="./static.js"></script>
     <script type="module" src="./index.js"></script>
   </head>
@@ -27,10 +26,10 @@
 
         <form id="regions" action="" method="post">
           <label for="regions">Select a UK Region:</label>
-          <select id="regionsList" name="regions">
+          <select id="regionsList" name="regions" disabled>
             <option value="0" disabled selected>Select Region</option>
           </select>
-          <button id="compareButton" name="regions">Compare</button>
+          <button id="compareButton" name="regions" disabled>Compare</button>
         </form>
 
         <button id="clearButton">Clear All</button>
@@ -38,7 +37,10 @@
     </header>
 
     <main>
-      <div id="container"></div>
+      <div id="container">
+        <div></div>
+        <div></div>
+      </div>
     </main>
 
     <footer>
