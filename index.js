@@ -36,23 +36,27 @@ const schema = Joi.string().regex(
 
 // a joi validator function for postcode
 const postcodeValidator = (input) => {
-  //   send the data to joi and validate
-  Joi.validate(input, schema, { abortEarly: false }, (error, response) => {
-    if (error) {
-      return false;
-    } else {
-      finalPostcode = response.replace(/\s+/g, "").slice(0, -3);
-      //   log(finalPostcode);
-      writeData(finalPostcode, POSTCODE_API_URL, "local");
-      errorMessage.innerHTML = "";
-      return true;
-    }
+  return new Promise((resolve, reject) => {
+    //   send the data to joi and validate
+    Joi.validate(input, schema, { abortEarly: false }, (error, response) => {
+      if (error) {
+        resolve(false);
+      } else {
+        log("else block");
+        finalPostcode = response.replace(/\s+/g, "").slice(0, -3);
+        //   log(finalPostcode);
+        writeData(finalPostcode, POSTCODE_API_URL, "local");
+        errorMessage.innerHTML = "";
+        resolve(true);
+      }
+    });
   });
 };
 
 // a function to check whether the user input is a valid location and whether it is in the UK
 const locationCheck = async (input) => {
-  const isValidPostcode = postcodeValidator(input);
+  const isValidPostcode = await postcodeValidator(input);
+  log(isValidPostcode);
   if (isValidPostcode) {
     return;
   }
@@ -73,6 +77,7 @@ const locationCheck = async (input) => {
       }
     }
   }
+  log(isValidPostcode, data);
   errorMessage.innerHTML = "Please enter a valid UK area name or postcode";
 };
 
