@@ -47,6 +47,8 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
   event.preventDefault();
   errorMessage.innerHTML = "";
   container.innerHTML = "";
+  regionDropDown.selectedIndex = 0;
+  // inputBox.value = "";
 
   if (userInput) {
     locationCheck(userInput);
@@ -60,13 +62,15 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
 compareButton.addEventListener("click", (event) => {
   event.preventDefault();
   const selectedOption = regionDropDown.value;
-  //   log(selectedOption);
+  inputBox.value = "";
 
   if (selectedOption === "N") {
     writeData(selectedOption, NATIONAL_API_URL_INTENSITY, "regional");
   } else {
     writeData(selectedOption, REGIONAL_API_URL, "regional");
   }
+  regionDropDown.disabled = true;
+  compareButton.disabled = true;
 });
 
 // clear the container
@@ -74,6 +78,7 @@ clearButton.addEventListener("click", (event) => {
   event.preventDefault();
   container.innerHTML = "";
   inputBox.value = "";
+  regionDropDown.selectedIndex = 0;
   checkButton.disabled = true;
   regionDropDown.disabled = true;
   compareButton.disabled = true;
@@ -144,7 +149,7 @@ const locationCheck = async (input) => {
           const long = data[i].lon;
           const coordData = { coords: { latitude: lat, longitude: long } };
           geoToPostcode(coordData);
-          log("hi");
+          log("sik");
           return true;
         }
       }
@@ -199,6 +204,10 @@ const options = {
 // get the geolocation of the user
 geolocationButton.addEventListener("click", (event) => {
   event.preventDefault();
+  container.innerHTML = "";
+  regionDropDown.selectedIndex = 0;
+  inputBox.value = "";
+
   navigator.geolocation.getCurrentPosition(geoToPostcode, error, options);
 });
 
@@ -258,25 +267,19 @@ const getData = async (locationData, url) => {
   }
 };
 
-// check and run the data function
-const writeData = async (locationData, url, elementId) => {
-  try {
-    if (locationData) {
-      const data = await getData(locationData, url);
-      displayData(data, elementId);
-      regionDropDown.disabled = false;
-      compareButton.disabled = false;
-      clearButton.disabled = false;
-      return;
-    }
-    return;
-  } catch (error) {
-    errorMessage.innerHTML = errorText[1];
-  }
-};
-
 // display the obtained data for the user
 const displayData = (data, elementId) => {
+  const containerChildren = container.querySelectorAll("div");
+
+  if (containerChildren.length >= 1) {
+    regionDropDown.disabled = true;
+    compareButton.disabled = true;
+  } else {
+    regionDropDown.disabled = false;
+    compareButton.disabled = false;
+    clearButton.disabled = false;
+  }
+
   if (data) {
     const region = data.shortname;
     const stats = data.data[0];
@@ -285,7 +288,7 @@ const displayData = (data, elementId) => {
     const intensity = stats.intensity;
     const generationMix = stats.generationmix;
 
-    document.getElementById(container.id).innerHTML = "";
+    // document.getElementById(container.id).innerHTML = "";
 
     updateDom(container.id, `div`, ``, elementId);
 
@@ -293,7 +296,7 @@ const displayData = (data, elementId) => {
     updateDom(
       elementId,
       `h4`,
-      `Date & Time: ${timeStampToLocal(fromDate)} - ${timeStampToLocal(toDate)}`
+      `Time Period: ${timeStampToLocal(fromDate)} - ${timeStampToLocal(toDate)}`
     );
     updateDom(elementId, `h4`, `Carbon Intensity Data:`);
     updateDom(
@@ -324,6 +327,20 @@ const updateDom = (targetId, tag, text, elementId = "") => {
   element.id = elementId;
   element.innerHTML = text;
   document.getElementById(targetId).appendChild(element);
+};
+
+// check and run the data function
+const writeData = async (locationData, url, elementId) => {
+  try {
+    if (locationData) {
+      const data = await getData(locationData, url);
+      displayData(data, elementId);
+      return;
+    }
+    return;
+  } catch (error) {
+    errorMessage.innerHTML = errorText[1];
+  }
 };
 
 // ---------------------------------------------------------------------------------------------------------------------------
