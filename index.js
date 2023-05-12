@@ -5,6 +5,7 @@ import {
   NATIONAL_API_URL_INTENSITY,
   NATIONAL_API_URL_GENERATION,
   GEOCODING_API_URL,
+  UK_POSTCODE_VALIDATOR,
   GEO_TO_POSTCODE_API_URL,
   container,
   geolocationButton,
@@ -12,6 +13,7 @@ import {
   compareButton,
   clearButton,
   errorMessage,
+  errorText,
 } from "./static.js";
 
 // final postcode in suitable format
@@ -42,10 +44,9 @@ const postcodeValidator = (input) => {
       if (error) {
         resolve(false);
       } else {
-        log("else block");
         finalPostcode = response.replace(/\s+/g, "").slice(0, -3);
         //   log(finalPostcode);
-        writeData(finalPostcode, POSTCODE_API_URL, "local");
+
         errorMessage.innerHTML = "";
         resolve(true);
       }
@@ -53,32 +54,54 @@ const postcodeValidator = (input) => {
   });
 };
 
+// ensure that the postcode is a valid UK postcode
+const checkUKPostcode = async (input) => {
+  try {
+    const isValidUKPostcode = await axios.get(
+      UK_POSTCODE_VALIDATOR.replace(`{postcode}`, input)
+    );
+    log(isValidUKPostcode.status);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 // a function to check whether the user input is a valid location and whether it is in the UK
 const locationCheck = async (input) => {
   const isValidPostcode = await postcodeValidator(input);
-  log(isValidPostcode);
-  if (isValidPostcode) {
+  const isPostcodeUK = await checkUKPostcode(input);
+  log(isPostcodeUK);
+  if (isValidPostcode && isPostcodeUK) {
+    writeData(finalPostcode, POSTCODE_API_URL, "local");
     return;
   }
 
   // run it through the api
-  const { data } = await axios.get(
-    GEOCODING_API_URL.replace(`{address}`, input)
-  );
-
-  if (data.length > 0) {
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].display_name.includes("United Kingdom")) {
-        const lat = data[i].lat;
-        const long = data[i].lon;
-        const coordData = { coords: { latitude: lat, longitude: long } };
-        geoToPostcode(coordData);
-        return true;
+  try {
+    const { data } = await axios.get(
+      GEOCODING_API_URL.replace(`{address}`, input)
+    );
+    log(data);
+    if (data.length > 0) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].display_name.includes("United Kingdom")) {
+          const lat = data[i].lat;
+          const long = data[i].lon;
+          const coordData = { coords: { latitude: lat, longitude: long } };
+          geoToPostcode(coordData);
+          log("hi");
+          return true;
+        }
       }
+    } else {
+      errorMessage.innerHTML = errorText[0];
+      return false;
     }
+  } catch (error) {
+    errorMessage.innerHTML = errorText[0];
   }
-  log(isValidPostcode, data);
-  errorMessage.innerHTML = "Please enter a valid UK area name or postcode";
+  errorMessage.innerHTML = errorText[0];
 };
 
 // get data from the user
@@ -94,6 +117,9 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
 
   if (userInput) {
     locationCheck(userInput);
+  } else {
+    errorMessage.innerHTML = errorText[0];
+    return;
   }
 });
 
@@ -103,41 +129,52 @@ const getData = async (locationData, url) => {
   const splitUrl = copiedUrl.split("/");
   const replaceable = splitUrl[splitUrl.length - 1];
 
-  //   talk to the api
-  if (locationData === "N") {
-    // for national data
-    // get the data from the api
-    let nationalIntensity = await axios.get(NATIONAL_API_URL_INTENSITY);
-    let nationalGeneration = await axios.get(NATIONAL_API_URL_GENERATION);
+  try {
+    //   talk to the api
+    if (locationData === "N") {
+      // for national data
+      // get the data from the api
+      let nationalIntensity = await axios.get(NATIONAL_API_URL_INTENSITY);
+      let nationalGeneration = await axios.get(NATIONAL_API_URL_GENERATION);
 
-    // move the data such that to create a compatible data structure
-    nationalIntensity = nationalIntensity.data.data[0].intensity;
-    nationalGeneration = nationalGeneration.data.data;
-    nationalGeneration["intensity"] = nationalIntensity;
-    nationalApiData = { shortname: "National", data: [nationalGeneration] };
+      // move the data such that to create a compatible data structure
+      nationalIntensity = nationalIntensity.data.data[0].intensity;
+      nationalGeneration = nationalGeneration.data.data;
+      nationalGeneration["intensity"] = nationalIntensity;
+      nationalApiData = { shortname: "National", data: [nationalGeneration] };
 
-    log(nationalApiData);
-    return nationalApiData;
-  } else {
-    // for regional or local data
-    const { data: d } = await axios.get(url.replace(replaceable, locationData));
+      log(nationalApiData);
+      return nationalApiData;
+    } else {
+      // for regional or local data
+      const { data: d } = await axios.get(
+        url.replace(replaceable, locationData)
+      );
 
-    localApiData = d.data[0];
-    log(localApiData);
-    return localApiData;
+      localApiData = d.data[0];
+      log(localApiData);
+      return localApiData;
+    }
+  } catch (error) {
+    log(error);
+    errorMessage.innerHTML = errorText[1];
   }
 };
 
 // check and run the data function
 const writeData = async (locationData, url, elementId) => {
-  if (locationData) {
-    const data = await getData(locationData, url);
-    displayData(data, elementId);
-    regionDropDown.disabled = false;
-    compareButton.disabled = false;
+  try {
+    if (locationData) {
+      const data = await getData(locationData, url);
+      displayData(data, elementId);
+      regionDropDown.disabled = false;
+      compareButton.disabled = false;
+      return;
+    }
     return;
+  } catch (error) {
+    errorMessage.innerHTML = errorText[1];
   }
-  return;
 };
 
 // display the obtained data for the user

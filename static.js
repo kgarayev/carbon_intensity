@@ -36,6 +36,10 @@ export const GEOCODING_API_URL = `https://geocode.maps.co/search?q={address}`;
 
 export const GEO_TO_POSTCODE_API_URL = `https://api.postcodes.io/postcodes?lon={longitude}&lat={latitude}`;
 
+// validate UK postcode
+export const UK_POSTCODE_VALIDATOR =
+  "https://api.postcodes.io/postcodes/{postcode}";
+
 // select the html element(s)
 export const container = document.getElementById("container");
 
@@ -53,3 +57,9 @@ export const clearButton = document.getElementById("clearButton");
 
 // selecting error message element
 export const errorMessage = document.getElementById("errorMessage");
+
+// error texts
+export const errorText = [
+  "Please enter a valid UK area name or postcode.",
+  "Something has gone wrong. Apologies for the inconvenience.",
+];
