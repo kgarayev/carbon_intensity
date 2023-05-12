@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/joi-browser@13.4.0/dist/joi-browser.min.js"></script>
+    <script type="module" src="./utils.js"></script>
     <script type="module" src="./static.js"></script>
     <script type="module" src="./index.js"></script>
   </head>
@@ -19,7 +20,7 @@
           <label for="postcode">Type your Area, Location or Postcode:</label>
           <input type="text" name="postcode" />
           <button id="geolocationButton">Current Location</button>
-          <button id="checkButton">Check</button>
+          <button id="checkButton" disabled>Check</button>
         </form>
 
         <p id="errorMessage"></p>
@@ -32,7 +33,7 @@
           <button id="compareButton" name="regions" disabled>Compare</button>
         </form>
 
-        <button id="clearButton">Clear All</button>
+        <button id="clearButton" disabled>Clear All</button>
       </div>
     </header>
 

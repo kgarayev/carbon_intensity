@@ -16,6 +16,8 @@ import {
   errorText,
 } from "./static.js";
 
+import { log, timeStampToLocal } from "./utils.js";
+
 // final postcode in suitable format
 let finalPostcode;
 
@@ -27,9 +29,6 @@ let localApiData;
 
 // variable for the national data from API
 let nationalApiData;
-
-// to simplify console.log command
-const { log } = console;
 
 // create a postcode schema for validation
 const schema = Joi.string().regex(
@@ -107,6 +106,7 @@ const locationCheck = async (input) => {
 // get data from the user
 document.addEventListener("input", (event) => {
   userInput = event.target.value.trim();
+  checkButton.disabled = false;
 });
 
 // submit the final user input and validate
@@ -169,6 +169,7 @@ const writeData = async (locationData, url, elementId) => {
       displayData(data, elementId);
       regionDropDown.disabled = false;
       compareButton.disabled = false;
+      clearButton.disabled = false;
       return;
     }
     return;
@@ -288,4 +289,8 @@ compareButton.addEventListener("click", (event) => {
 clearButton.addEventListener("click", (event) => {
   event.preventDefault();
   container.innerHTML = "";
+  checkButton.disabled = true;
+  regionDropDown.disabled = true;
+  compareButton.disabled = true;
+  clearButton.disabled = true;
 });
