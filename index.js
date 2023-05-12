@@ -14,9 +14,10 @@ import {
   clearButton,
   errorMessage,
   errorText,
+  inputBox,
 } from "./static.js";
 
-import { log, timeStampToLocal } from "./utils.js";
+import { log, timeStampToLocal, currentISO } from "./utils.js";
 
 // final postcode in suitable format
 let finalPostcode;
@@ -30,6 +31,60 @@ let localApiData;
 // variable for the national data from API
 let nationalApiData;
 
+// ---------------------------------------------------------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ---------------------------------------------------------------------------------------------------------------------------
+
+// MAIN EVENT LISTENERS:
+// get data from the user
+document.addEventListener("input", (event) => {
+  userInput = event.target.value.trim();
+  checkButton.disabled = false;
+});
+
+// submit the final user input and validate
+document.getElementById("checkButton").addEventListener("click", (event) => {
+  event.preventDefault();
+  errorMessage.innerHTML = "";
+  container.innerHTML = "";
+
+  if (userInput) {
+    locationCheck(userInput);
+  } else {
+    errorMessage.innerHTML = errorText[0];
+    return;
+  }
+});
+
+// listen to compare button and call the API function
+compareButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  const selectedOption = regionDropDown.value;
+  //   log(selectedOption);
+
+  if (selectedOption === "N") {
+    writeData(selectedOption, NATIONAL_API_URL_INTENSITY, "regional");
+  } else {
+    writeData(selectedOption, REGIONAL_API_URL, "regional");
+  }
+});
+
+// clear the container
+clearButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  container.innerHTML = "";
+  inputBox.value = "";
+  checkButton.disabled = true;
+  regionDropDown.disabled = true;
+  compareButton.disabled = true;
+  clearButton.disabled = true;
+});
+
+// ---------------------------------------------------------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ---------------------------------------------------------------------------------------------------------------------------
+
+// VALIDATOR FUNCTIONS:
 // create a postcode schema for validation
 const schema = Joi.string().regex(
   /^([A-Z]{1,2}\d{1,2}[A-Z]?)\s*(\d[A-Z]{2})$/i
@@ -103,26 +158,68 @@ const locationCheck = async (input) => {
   errorMessage.innerHTML = errorText[0];
 };
 
-// get data from the user
-document.addEventListener("input", (event) => {
-  userInput = event.target.value.trim();
-  checkButton.disabled = false;
-});
+// ---------------------------------------------------------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ---------------------------------------------------------------------------------------------------------------------------
 
-// submit the final user input and validate
-document.getElementById("checkButton").addEventListener("click", (event) => {
+// GEOLOCATION FUNCTIONS:
+// get the coordinates, convert them to postcode and write the data to the DOM
+const geoToPostcode = async ({ coords }) => {
+  const { latitude, longitude } = coords;
+  log(latitude, longitude);
+
+  let urlCopy = GEO_TO_POSTCODE_API_URL.slice()
+    .replace("{longitude}", longitude)
+    .replace("{latitude}", latitude);
+
+  const { data } = await axios.get(urlCopy);
+
+  finalPostcode = data.result[0].postcode
+    .trim()
+    .replace(/\s+/g, "")
+    .toUpperCase()
+    .slice(0, -3);
+
+  log(finalPostcode);
+  writeData(finalPostcode, POSTCODE_API_URL, "local");
+};
+
+// geolocation error function
+const error = (error) => {
+  console.log(error);
+};
+
+// geolocation options object
+const options = {
+  enableHighAccuracy: true,
+  maximumAge: 0,
+  timeout: 2000,
+};
+
+// get the geolocation of the user
+geolocationButton.addEventListener("click", (event) => {
   event.preventDefault();
-  errorMessage.innerHTML = "";
-  container.innerHTML = "";
-
-  if (userInput) {
-    locationCheck(userInput);
-  } else {
-    errorMessage.innerHTML = errorText[0];
-    return;
-  }
+  navigator.geolocation.getCurrentPosition(geoToPostcode, error, options);
 });
 
+// dynamically setting the region options in html
+const setRegions = () => {
+  for (const regionId in regions) {
+    const option = document.createElement("option");
+    option.value = regionId;
+    option.text = regions[regionId];
+    regionDropDown.add(option);
+  }
+};
+
+// run the set regions function
+setRegions();
+
+// ---------------------------------------------------------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ---------------------------------------------------------------------------------------------------------------------------
+
+// MAIN FUNCTIONS TO TALK TO API:
 // a function to get data from the API
 const getData = async (locationData, url) => {
   const copiedUrl = url.slice();
@@ -192,10 +289,21 @@ const displayData = (data, elementId) => {
 
     updateDom(container.id, `div`, ``, elementId);
 
-    updateDom(elementId, `h4`, `Region: ${region}`);
-    updateDom(elementId, `h5`, `Date & Time: ${fromDate} - ${toDate}`);
-    updateDom(elementId, `p`, `Forecast: ${intensity.forecast}`);
+    updateDom(elementId, `h3`, `Region: ${region}`);
+    updateDom(
+      elementId,
+      `h4`,
+      `Date & Time: ${timeStampToLocal(fromDate)} - ${timeStampToLocal(toDate)}`
+    );
+    updateDom(elementId, `h4`, `Carbon Intensity Data:`);
+    updateDom(
+      elementId,
+      `p`,
+      `Forecast: ${intensity.forecast} gCO<sub>2</sub>/kWh`
+    );
     updateDom(elementId, `p`, `Index: ${intensity.index}`);
+
+    updateDom(elementId, `h4`, `Electricity Generation Mix:`);
 
     generationMix.forEach((item) => {
       for (let key in item) {
@@ -211,86 +319,13 @@ const displayData = (data, elementId) => {
   }
 };
 
-// a function to programmatically update the DOM
 const updateDom = (targetId, tag, text, elementId = "") => {
-  const content = document.createTextNode(text);
   const element = document.createElement(tag);
   element.id = elementId;
-  element.append(content);
-  document.getElementById(targetId).append(element);
+  element.innerHTML = text;
+  document.getElementById(targetId).appendChild(element);
 };
 
-// get the coordinates, convert them to postcode and write the data to the DOM
-const geoToPostcode = async ({ coords }) => {
-  const { latitude, longitude } = coords;
-  log(latitude, longitude);
-
-  let urlCopy = GEO_TO_POSTCODE_API_URL.slice()
-    .replace("{longitude}", longitude)
-    .replace("{latitude}", latitude);
-
-  const { data } = await axios.get(urlCopy);
-
-  finalPostcode = data.result[0].postcode
-    .trim()
-    .replace(/\s+/g, "")
-    .toUpperCase()
-    .slice(0, -3);
-
-  log(finalPostcode);
-  writeData(finalPostcode, POSTCODE_API_URL, "local");
-};
-
-// geolocation error function
-const error = (error) => {
-  console.log(error);
-};
-
-// geolocation options object
-const options = {
-  enableHighAccuracy: true,
-  maximumAge: 0,
-  timeout: 2000,
-};
-
-// get the geolocation of the user
-geolocationButton.addEventListener("click", (event) => {
-  event.preventDefault();
-  navigator.geolocation.getCurrentPosition(geoToPostcode, error, options);
-});
-
-// dynamically setting the region options in html
-const setRegions = () => {
-  for (const regionId in regions) {
-    const option = document.createElement("option");
-    option.value = regionId;
-    option.text = regions[regionId];
-    regionDropDown.add(option);
-  }
-};
-
-// run the set regions function
-setRegions();
-
-// listen to compare button and call the API function
-compareButton.addEventListener("click", (event) => {
-  event.preventDefault();
-  const selectedOption = regionDropDown.value;
-  //   log(selectedOption);
-
-  if (selectedOption === "N") {
-    writeData(selectedOption, NATIONAL_API_URL_INTENSITY, "regional");
-  } else {
-    writeData(selectedOption, REGIONAL_API_URL, "regional");
-  }
-});
-
-// clear the container
-clearButton.addEventListener("click", (event) => {
-  event.preventDefault();
-  container.innerHTML = "";
-  checkButton.disabled = true;
-  regionDropDown.disabled = true;
-  compareButton.disabled = true;
-  clearButton.disabled = true;
-});
+// ---------------------------------------------------------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ---------------------------------------------------------------------------------------------------------------------------

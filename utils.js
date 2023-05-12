@@ -5,3 +5,11 @@ export const { log } = console;
 export const timeStampToLocal = (dateString) => {
   return new Date(dateString).toLocaleString();
 };
+
+// current time in ISO format
+export const currentISO = () => {
+  const now = new Date();
+  const isoString = now.toISOString();
+  log(isoString);
+  return isoString;
+};

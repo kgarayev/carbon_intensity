@@ -58,6 +58,9 @@ export const clearButton = document.getElementById("clearButton");
 // selecting error message element
 export const errorMessage = document.getElementById("errorMessage");
 
+// select html element input box
+export const inputBox = document.getElementById("inputBox");
+
 // error texts
 export const errorText = [
   "Please enter a valid UK area name or postcode.",
