@@ -5,10 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carbon Intensity near You</title>
-    <link rel="stylesheet" href="./generic.css" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./stylesheets/generic.css" />
+    <link rel="stylesheet" href="./stylesheets/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/joi-browser@13.4.0/dist/joi-browser.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script type="module" src="./utils.js"></script>
     <script type="module" src="./static.js"></script>
     <script type="module" src="./index.js"></script>
@@ -38,6 +41,10 @@
     </header>
 
     <main>
+      <div>
+        <canvas id="myChart"></canvas>
+      </div>
+
       <div id="container"></div>
     </main>
 

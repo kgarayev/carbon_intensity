@@ -269,6 +269,31 @@ const getData = async (locationData, url) => {
 
 // display the obtained data for the user
 const displayData = (data, elementId) => {
+  // set a chart data to use with chart.js
+  let chartData = {
+    labels: [],
+    datasets: [
+      {
+        label: elementId,
+        data: [],
+        backgroundColor: [
+          "black",
+          "blue",
+          "green",
+          "orange",
+          "yellow",
+          "brown",
+          "grey",
+          "pink",
+          "purple",
+        ],
+        hoverOffset: 4,
+        spacing: 3,
+        weight: 3,
+      },
+    ],
+  };
+
   const containerChildren = container.querySelectorAll("div");
 
   if (containerChildren.length >= 1) {
@@ -311,14 +336,19 @@ const displayData = (data, elementId) => {
     generationMix.forEach((item) => {
       for (let key in item) {
         if (key === "fuel") {
+          const capitalised =
+            item[key].charAt(0).toUpperCase() + item[key].slice(1);
+          chartData.labels.push(capitalised);
           updateDom(elementId, `h5`, `Fuel Type: `);
-          updateDom(elementId, `p`, `${item[key].toUpperCase()}`);
+          updateDom(elementId, `p`, `${capitalised}`);
         } else {
+          chartData.datasets[0].data.push(item[key]);
           updateDom(elementId, `h5`, `Percentage of Mix: `);
           updateDom(elementId, `p`, `${item[key]}%`);
         }
       }
     });
+    log(chartData);
   }
 };
 
