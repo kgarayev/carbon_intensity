@@ -62,6 +62,11 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
 compareButton.addEventListener("click", (event) => {
   event.preventDefault();
   const selectedOption = regionDropDown.value;
+  log(selectedOption);
+  if (selectedOption == 0) {
+    errorMessage.innerHTML = errorText[2];
+    return;
+  }
   inputBox.value = "";
 
   if (selectedOption === "N") {
@@ -76,6 +81,7 @@ compareButton.addEventListener("click", (event) => {
 // clear the container
 clearButton.addEventListener("click", (event) => {
   event.preventDefault();
+  errorMessage.innerHTML = "";
   container.innerHTML = "";
   inputBox.value = "";
   regionDropDown.selectedIndex = 0;
@@ -267,33 +273,13 @@ const getData = async (locationData, url) => {
   }
 };
 
+// function to set a progress in a progress bar in css
+const setProgress = (element, percent) => {
+  element.style.width = percent + "%";
+};
+
 // display the obtained data for the user
 const displayData = (data, elementId) => {
-  // set a chart data to use with chart.js
-  let chartData = {
-    labels: [],
-    datasets: [
-      {
-        label: elementId,
-        data: [],
-        backgroundColor: [
-          "black",
-          "blue",
-          "green",
-          "orange",
-          "yellow",
-          "brown",
-          "grey",
-          "pink",
-          "purple",
-        ],
-        hoverOffset: 4,
-        spacing: 3,
-        weight: 3,
-      },
-    ],
-  };
-
   const containerChildren = container.querySelectorAll("div");
 
   if (containerChildren.length >= 1) {
@@ -338,17 +324,15 @@ const displayData = (data, elementId) => {
         if (key === "fuel") {
           const capitalised =
             item[key].charAt(0).toUpperCase() + item[key].slice(1);
-          chartData.labels.push(capitalised);
+
           updateDom(elementId, `h5`, `Fuel Type: `);
           updateDom(elementId, `p`, `${capitalised}`);
         } else {
-          chartData.datasets[0].data.push(item[key]);
           updateDom(elementId, `h5`, `Percentage of Mix: `);
           updateDom(elementId, `p`, `${item[key]}%`);
         }
       }
     });
-    log(chartData);
   }
 };
 
@@ -369,6 +353,7 @@ const writeData = async (locationData, url, elementId) => {
     }
     return;
   } catch (error) {
+    log(error);
     errorMessage.innerHTML = errorText[1];
   }
 };
@@ -376,3 +361,8 @@ const writeData = async (locationData, url, elementId) => {
 // ---------------------------------------------------------------------------------------------------------------------------
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ---------------------------------------------------------------------------------------------------------------------------
+
+const progressBar = document.getElementById("progress");
+
+// Call the setProgress() function with a percentage value between 0 and 100 to update the progress bar
+setProgress(progressBar, 20);

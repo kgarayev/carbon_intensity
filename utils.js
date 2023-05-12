@@ -14,34 +14,8 @@ export const currentISO = () => {
   return isoString;
 };
 
-// create a chart using chart.js
+// function to set a progress in a progress bar in css
 
-const data = {
-  labels: ["dassag", "massag", "vassag"],
-  datasets: [
-    {
-      data: [300, 50, 100],
-      backgroundColor: ["black", "blue", "green"],
-      borderWidth: 2,
-    },
-  ],
+export const setProgress = (percent) => {
+  progressBar.style.width = percent + "%";
 };
-
-const config = {
-  type: "doughnut",
-  data: data,
-  plugins: [ChartDataLabels],
-  options: {
-    cutout: "75%", // the portion of the doughnut that is the cutout in the middle
-    radius: 200,
-    animation: true,
-    aspectRatio: 1,
-    responsive: true,
-  },
-};
-
-const ctx = document.getElementById("myChart");
-
-const myChart = new Chart(ctx, config);
-
-const createChart = () => {};

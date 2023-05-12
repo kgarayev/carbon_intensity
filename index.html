@@ -10,8 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/joi-browser@13.4.0/dist/joi-browser.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script type="module" src="./utils.js"></script>
     <script type="module" src="./static.js"></script>
     <script type="module" src="./index.js"></script>
@@ -41,11 +39,11 @@
     </header>
 
     <main>
-      <div>
-        <canvas id="myChart"></canvas>
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
       </div>
 
-      <div id="container"></div>
+      <div id="container" class="flex-container"></div>
     </main>
 
     <footer>

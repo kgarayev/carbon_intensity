@@ -65,4 +65,5 @@ export const inputBox = document.getElementById("inputBox");
 export const errorText = [
   "Please enter a valid UK area name or postcode.",
   "Something has gone wrong. Apologies for the inconvenience.",
+  "Please select a valid UK region to compare.",
 ];
