@@ -355,3 +355,7 @@ footer p {
 .placeholder {
   height: 3rem;
 }
+
+input:focus {
+  outline: none;
+}

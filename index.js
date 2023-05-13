@@ -39,11 +39,22 @@ let nationalApiData;
 // MAIN EVENT LISTENERS:
 // get data from the user
 document.addEventListener("input", (event) => {
-  userInput = event.target.value.trim();
+  userInput = event.target.value.trim().toUpperCase();
   checkButton.disabled = false;
 
   inputBox.classList.remove("offButton");
   inputBox.classList.add("onButton");
+});
+
+checkButton.focus();
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    // Check if button1 is focused and trigger its click event
+    if (document.activeElement === checkButton) {
+      checkButton.click();
+    }
+  }
 });
 
 // submit the final user input and validate
@@ -59,6 +70,24 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
   } else {
     errorMessage.innerHTML = errorText[0];
     return;
+  }
+});
+
+// click check button if Enter is pressed
+inputBox.addEventListener("keydown", (event) => {
+  if (event.key === `Enter`) {
+    event.preventDefault();
+    errorMessage.innerHTML = "";
+    container.innerHTML = "";
+    regionDropDown.selectedIndex = 0;
+    // inputBox.value = "";
+
+    if (userInput) {
+      locationCheck(userInput);
+    } else {
+      errorMessage.innerHTML = errorText[0];
+      return;
+    }
   }
 });
 
