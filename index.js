@@ -67,7 +67,9 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
 compareButton.addEventListener("click", (event) => {
   event.preventDefault();
   const selectedOption = regionDropDown.value;
+
   log(selectedOption);
+
   if (selectedOption == 0) {
     errorMessage.innerHTML = errorText[2];
     return;
@@ -79,6 +81,7 @@ compareButton.addEventListener("click", (event) => {
   } else {
     writeData(selectedOption, REGIONAL_API_URL, "regional");
   }
+
   regionDropDown.disabled = true;
   compareButton.disabled = true;
   regionDropDown.classList.remove("offButton");
@@ -110,6 +113,14 @@ clearButton.addEventListener("click", (event) => {
   clearButton.classList.remove("onButton");
   regionDropDown.classList.add("offButton");
   regionDropDown.classList.remove("onButton");
+
+  if (document.getElementById("local")) {
+    document.getElementById("local").classList.remove("brutal");
+  }
+
+  if (document.getElementById("regional")) {
+    document.getElementById("regional").classList.remove("brutal");
+  }
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -263,7 +274,6 @@ setRegions();
 // MAIN FUNCTIONS TO TALK TO API:
 // a function to get data from the API
 const getData = async (locationData, url) => {
-  container.classList.remove("brutal");
   spinner.innerHTML = `<span class="loader"></span>`;
 
   const copiedUrl = url.slice();
@@ -295,6 +305,31 @@ const getData = async (locationData, url) => {
       localApiData = d.data[0];
       log(localApiData);
       return localApiData;
+    }
+
+    if (
+      document.getElementById("local") &&
+      !document.getElementById("regional")
+    ) {
+      document.getElementById("local").classList.remove("brutal");
+      log("i removed local");
+    }
+
+    if (
+      document.getElementById("regional") &&
+      !document.getElementById("local")
+    ) {
+      document.getElementById("regional").classList.remove("brutal");
+      log("i removed regional");
+    }
+
+    if (
+      document.getElementById("regional") &&
+      document.getElementById("local")
+    ) {
+      document.getElementById("regional").classList.remove("brutal");
+      document.getElementById("local").classList.remove("brutal");
+      log("i removed both");
     }
   } catch (error) {
     log(error);
@@ -328,8 +363,6 @@ const displayData = (data, elementId) => {
   }
 
   if (data) {
-    container.classList.add("brutal");
-
     const region = data.shortname;
     const stats = data.data[0];
     const fromDate = stats.from;
@@ -340,6 +373,13 @@ const displayData = (data, elementId) => {
     // document.getElementById(container.id).innerHTML = "";
 
     updateDom(container.id, `div`, ``, elementId);
+
+    const brutalElement = document.getElementById(elementId);
+
+    log(elementId);
+    log(brutalElement);
+
+    brutalElement.classList.add("brutal");
 
     updateDom(elementId, `h3`, `Region: ${region}`);
     updateDom(elementId, `h4`, `Time Period`);
@@ -355,34 +395,49 @@ const displayData = (data, elementId) => {
 
     updateDom(elementId, `h4`, `Electricity Generation Mix`);
 
+    updateDom(elementId, `div`, ``, `wrapper`, `wrapper`);
+
     generationMix.forEach((item) => {
       const capitalised =
         item["fuel"].charAt(0).toUpperCase() + item["fuel"].slice(1);
 
       // updateDom(elementId, `h5`, `Fuel Type: `);
-      updateDom(elementId, `p`, `${capitalised}`);
+      updateDom(`wrapper`, `p`, `${capitalised}`);
 
-      updateDom(elementId, `p`, `${item["perc"]}%`);
+      // updateDom(`wrapper`, `p`, `${item["perc"]}%`);
 
       updateDom(
-        elementId,
+        `wrapper`,
         `div`,
-        `<div class="progress-bar">
-        <div class="progress" id="progress-${capitalised}"></div>
-      </div>`
+        `<div class="progessDiv">
+            <div class="progressBar">
+
+              <div class="progress" id="progress${capitalised}">
+              </div>
+              <div class="percentage" id="percentage${capitalised}">
+              </div>
+
+            </div> 
+         </div>`
       );
 
-      const progressBar = document.getElementById(`progress-${capitalised}`);
+      const progressBar = document.getElementById(`progress${capitalised}`);
 
       // // Call the setProgress() function with a percentage value between 0 and 100 to update the progress bar
       setProgress(progressBar, item["perc"]);
+
+      const showPercentage = document.getElementById(
+        `percentage${capitalised}`
+      );
+      showPercentage.innerHTML = `${item["perc"]}%`;
     });
   }
 };
 
-const updateDom = (targetId, tag, text, elementId = "") => {
+const updateDom = (targetId, tag, text, elementId = "", className) => {
   const element = document.createElement(tag);
   element.id = elementId;
+  // element.classList.add(className);
   element.innerHTML = text;
   document.getElementById(targetId).appendChild(element);
 };
@@ -408,11 +463,7 @@ const writeData = async (locationData, url, elementId) => {
 
 // function to set a progress in a progress bar in css
 const setProgress = (element, percent) => {
-  if (percent === 0) {
-    element.style.width = 1 + "%";
-  } else {
-    element.style.width = percent + "%";
-  }
+  element.style.width = 1 + percent + "%";
 };
 
 // const progressBar = document.getElementById("progress");
