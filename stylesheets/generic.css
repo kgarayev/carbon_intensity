@@ -21,24 +21,6 @@
   color-scheme: light only;
 }
 
-::placeholder {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-select {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-option {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
 div {
   margin: 0;
   padding: 0;
@@ -51,7 +33,7 @@ div {
 
 body {
   width: 100%;
-  margin: 1rem;
+  margin: 0.5rem;
   font-size: 1.6rem;
   text-rendering: optimizeSpeed;
   line-height: 1.5;

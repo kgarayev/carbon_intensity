@@ -20,16 +20,16 @@
     <script type="module" src="./static.js"></script>
     <script type="module" src="./index.js"></script>
   </head>
-  <body class="bg-midnight text-tahiti">
+  <body>
     <header>
-      <div>
+      <div class="sub-header">
         <h1 class="title">Carbon Intensity and Electricity Generation Mix</h1>
       </div>
 
-      <div>
-        <div><h2 class="sub-header">In Your Area</h2></div>
-        <form id="postcode" action="" method="post" class="form">
-          <div>
+      <div class="sub-header">
+        <div><h2 class="small-title">In Your Area</h2></div>
+        <form id="postcode" action="" method="post" class="form sub-header">
+          <div class="input-container">
             <input
               id="inputBox"
               class="input-field"
@@ -40,15 +40,26 @@
           </div>
 
           <div>
-            <span
+            <button
+              class="button-54 offButton geo-button"
+              id="geolocationButton"
+            >
+              <img
+                src="./icons/geolocation.svg"
+                alt="geo-icon"
+                class="geo-icon"
+              />
+            </button>
+
+            <!-- <span
               id="geolocationButton"
               class="material-symbols-outlined offButton"
             >
               my_location
-            </span>
+            </span> -->
           </div>
 
-          <div>
+          <div class="button">
             <button
               class="button-54 offButton"
               role="button"
@@ -60,17 +71,17 @@
           </div>
         </form>
 
-        <div><h2 class="sub-header">Compare to UK Regions</h2></div>
+        <div><h2 class="small-title">Compare to UK Regions</h2></div>
 
-        <form id="regions" action="" method="post">
-          <div>
+        <form id="regions" action="" method="post" class="form sub-header">
+          <div class="input-container">
             <!-- <label for="regions">Select a UK Region:</label> -->
             <select id="regionsList" name="regions" disabled class="offButton">
               <option value="0" disabled selected>Select a UK Region</option>
             </select>
           </div>
 
-          <div>
+          <div class="button">
             <button
               class="button-54 offButton"
               role="button"
@@ -83,7 +94,7 @@
           </div>
         </form>
 
-        <div>
+        <div class="button clear-button sub-header">
           <button
             class="button-54 offButton"
             role="button"
@@ -94,7 +105,7 @@
           </button>
         </div>
 
-        <div><p id="errorMessage"></p></div>
+        <div class="sub-header"><p id="errorMessage"></p></div>
       </div>
     </header>
 

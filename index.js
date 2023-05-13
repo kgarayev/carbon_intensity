@@ -42,6 +42,8 @@ document.addEventListener("input", (event) => {
   checkButton.disabled = false;
   checkButton.classList.remove("offButton");
   checkButton.classList.add("onButton");
+  inputBox.classList.remove("offButton");
+  inputBox.classList.add("onButton");
 });
 
 // submit the final user input and validate
