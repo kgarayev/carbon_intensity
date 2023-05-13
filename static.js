@@ -13,10 +13,10 @@ export const regions = {
   12: "South England",
   13: "London",
   14: "South East England",
+  N: "National",
   15: "England",
   16: "Scotland",
   17: "Wales",
-  N: "National",
 };
 
 // set a variable with the API URL for POSTCODES
@@ -66,7 +66,7 @@ export const spinner = document.getElementById("spinner");
 
 // error texts
 export const errorText = [
-  "Please enter a valid UK area name or postcode.",
+  "Please enter a valid area name or postcode in Britain.",
   "Something has gone wrong. Apologies for the inconvenience.",
   "Please select a valid UK region to compare.",
 ];

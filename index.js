@@ -407,7 +407,7 @@ const displayData = (data, elementId) => {
 
     brutalElement.classList.add("brutal");
 
-    updateDom(elementId, `h3`, `Region: ${region}`);
+    updateDom(elementId, `h3`, `${region}`);
     updateDom(elementId, `h4`, `Time Period`);
     updateDom(elementId, `p`, `From: ${timeStampToLocal(fromDate)}`);
     updateDom(elementId, `p`, `To: ${timeStampToLocal(toDate)}`);

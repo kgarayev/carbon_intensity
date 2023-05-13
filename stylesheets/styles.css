@@ -1,6 +1,7 @@
 * {
   color: rgb(87, 86, 86);
   /* border: 0.01rem solid grey; */
+  background-color: white;
 }
 
 body {
@@ -61,7 +62,7 @@ main * {
 .progressBar {
   position: relative;
   height: 2.5rem;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   margin-bottom: 0.5rem;
   /* border: 0.01rem rgb(87, 86, 86) solid; */
   display: flex;
@@ -110,7 +111,7 @@ main * {
   font-weight: 600;
   letter-spacing: 0.15rem;
   height: 3.5rem;
-  background-color: white;
+  /* background-color: white; */
 
   margin: 0;
   width: 100%;
@@ -338,13 +339,13 @@ footer {
   bottom: 0;
   font-size: 1rem;
   padding: 0;
-  background-color: white;
+  /* background-color: white; */
   width: 100%;
 }
 
 footer p {
   color: rgb(185, 185, 185);
-  background-color: white;
+  /* background-color: white; */
   padding: 0;
   margin: 0;
   width: 90%;
