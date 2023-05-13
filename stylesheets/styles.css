@@ -1,8 +1,3 @@
-/* import tailwind  */
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
 * {
   color: rgb(87, 86, 86);
   /* border: 0.01rem solid grey; */
@@ -15,9 +10,8 @@ body {
 }
 
 header {
-  /* margin-right: 1rem; */
   margin-top: 1rem;
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
 }
 
 .header-titles {
@@ -55,9 +49,6 @@ main * {
 
 .title {
   font-size: 2rem;
-
-  /* margin: 0; */
-
   max-width: 55rem;
 }
 
@@ -83,7 +74,6 @@ main * {
 .flex-container {
   font-size: 1.25rem;
   max-width: 55rem;
-  /* padding: 2rem; */
   display: flex;
   gap: 1rem;
 }
@@ -113,13 +103,12 @@ main * {
 
 /* CSS */
 
-/* CSS */
 .button-54 {
-  /* font-family: "Open Sans", sans-serif; */
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.15rem;
   height: 3.5rem;
+  background-color: white;
 
   margin: 0;
   width: 100%;
@@ -201,10 +190,6 @@ option {
 .button {
   width: 6.75rem;
 }
-/* 
-.geolocation-button {
-  width: 5rem;
-} */
 
 .geo-button {
   width: 3.5rem;
@@ -341,4 +326,8 @@ footer p {
   width: 90%;
   margin-top: 1rem;
   text-align: end;
+}
+
+.placeholder {
+  height: 3rem;
 }

@@ -395,39 +395,40 @@ const displayData = (data, elementId) => {
 
     updateDom(elementId, `h4`, `Electricity Generation Mix`);
 
-    updateDom(elementId, `div`, ``, `wrapper`, `wrapper`);
-
     generationMix.forEach((item) => {
       const capitalised =
         item["fuel"].charAt(0).toUpperCase() + item["fuel"].slice(1);
 
       // updateDom(elementId, `h5`, `Fuel Type: `);
-      updateDom(`wrapper`, `p`, `${capitalised}`);
+      updateDom(elementId, `p`, `${capitalised}`);
 
       // updateDom(`wrapper`, `p`, `${item["perc"]}%`);
 
       updateDom(
-        `wrapper`,
+        elementId,
         `div`,
         `<div class="progessDiv">
             <div class="progressBar">
 
-              <div class="progress" id="progress${capitalised}">
+              <div class="progress" id="${elementId}Progress${capitalised}">
               </div>
-              <div class="percentage" id="percentage${capitalised}">
+              <div class="percentage" id="${elementId}Percentage${capitalised}">
               </div>
 
             </div> 
          </div>`
       );
 
-      const progressBar = document.getElementById(`progress${capitalised}`);
+      const progressBar = document.getElementById(
+        `${elementId}Progress${capitalised}`
+      );
+      log(progressBar);
 
       // // Call the setProgress() function with a percentage value between 0 and 100 to update the progress bar
       setProgress(progressBar, item["perc"]);
 
       const showPercentage = document.getElementById(
-        `percentage${capitalised}`
+        `${elementId}Percentage${capitalised}`
       );
       showPercentage.innerHTML = `${item["perc"]}%`;
     });
@@ -447,6 +448,7 @@ const writeData = async (locationData, url, elementId) => {
   try {
     if (locationData) {
       const data = await getData(locationData, url);
+      log(elementId);
       displayData(data, elementId);
       return;
     }
