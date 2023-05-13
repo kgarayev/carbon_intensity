@@ -13,9 +13,3 @@ export const currentISO = () => {
   log(isoString);
   return isoString;
 };
-
-// function to set a progress in a progress bar in css
-
-export const setProgress = (percent) => {
-  progressBar.style.width = percent + "%";
-};

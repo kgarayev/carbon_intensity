@@ -2,15 +2,41 @@
 
 /* generic styles stylesheet  */
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+/* import tailwind  */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Red+Hat+Mono:wght@300;400;500;600;700&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&display=swap");
 
 :root {
   font-size: 10px;
+  font-weight: 500;
   margin: 0;
   padding: 0;
-  font-family: "Inter", sans-serif;
+  font-family: "IBM Plex Mono", monospace;
   color: #222222;
   color-scheme: light only;
+}
+
+::placeholder {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+select {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+option {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 div {

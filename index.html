@@ -7,6 +7,12 @@
     <title>Carbon Intensity near You</title>
     <link rel="stylesheet" href="./stylesheets/generic.css" />
     <link rel="stylesheet" href="./stylesheets/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- <link rel="stylesheet" href="./stylesheets/input.css" /> -->
+    <!-- <link href="./dstylesheets/dist/output.css" rel="stylesheet" /> -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/joi-browser@13.4.0/dist/joi-browser.min.js"></script>
 
@@ -14,27 +20,81 @@
     <script type="module" src="./static.js"></script>
     <script type="module" src="./index.js"></script>
   </head>
-  <body>
+  <body class="bg-midnight text-tahiti">
     <header>
       <div>
-        <form id="postcode" action="" method="post">
-          <label for="postcode">Type your Area, Location or Postcode:</label>
-          <input id="inputBox" type="text" name="postcode" />
-          <button id="geolocationButton">Current Location</button>
-          <button id="checkButton" disabled>Check</button>
+        <h1 class="title">Carbon Intensity and Electricity Generation Mix</h1>
+      </div>
+
+      <div>
+        <div><h2 class="sub-header">In Your Area</h2></div>
+        <form id="postcode" action="" method="post" class="form">
+          <div>
+            <input
+              id="inputBox"
+              class="input-field"
+              type="text"
+              placeholder="Enter Your Postcode or Town"
+              name="postcode"
+            />
+          </div>
+
+          <div>
+            <span
+              id="geolocationButton"
+              class="material-symbols-outlined offButton"
+            >
+              my_location
+            </span>
+          </div>
+
+          <div>
+            <button
+              class="button-54 offButton"
+              role="button"
+              id="checkButton"
+              disabled
+            >
+              Check
+            </button>
+          </div>
         </form>
 
-        <p id="errorMessage"></p>
+        <div><h2 class="sub-header">Compare to UK Regions</h2></div>
 
         <form id="regions" action="" method="post">
-          <label for="regions">Select a UK Region:</label>
-          <select id="regionsList" name="regions" disabled>
-            <option value="0" disabled selected>Select Region</option>
-          </select>
-          <button id="compareButton" name="regions" disabled>Compare</button>
+          <div>
+            <!-- <label for="regions">Select a UK Region:</label> -->
+            <select id="regionsList" name="regions" disabled class="offButton">
+              <option value="0" disabled selected>Select a UK Region</option>
+            </select>
+          </div>
+
+          <div>
+            <button
+              class="button-54 offButton"
+              role="button"
+              id="compareButton"
+              name="regions"
+              disabled
+            >
+              Compare
+            </button>
+          </div>
         </form>
 
-        <button id="clearButton" disabled>Clear All</button>
+        <div>
+          <button
+            class="button-54 offButton"
+            role="button"
+            id="clearButton"
+            disabled
+          >
+            Clear All
+          </button>
+        </div>
+
+        <div><p id="errorMessage"></p></div>
       </div>
     </header>
 

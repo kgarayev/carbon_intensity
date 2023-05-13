@@ -40,6 +40,8 @@ let nationalApiData;
 document.addEventListener("input", (event) => {
   userInput = event.target.value.trim();
   checkButton.disabled = false;
+  checkButton.classList.remove("offButton");
+  checkButton.classList.add("onButton");
 });
 
 // submit the final user input and validate
@@ -76,6 +78,12 @@ compareButton.addEventListener("click", (event) => {
   }
   regionDropDown.disabled = true;
   compareButton.disabled = true;
+  regionDropDown.classList.remove("offButton");
+  regionDropDown.classList.add("onButton");
+  checkButton.classList.add("offButton");
+  checkButton.classList.remove("onButton");
+  compareButton.classList.add("offButton");
+  compareButton.classList.remove("onButton");
 });
 
 // clear the container
@@ -89,6 +97,16 @@ clearButton.addEventListener("click", (event) => {
   regionDropDown.disabled = true;
   compareButton.disabled = true;
   clearButton.disabled = true;
+  geolocationButton.classList.add("offButton");
+  geolocationButton.classList.remove("onButton");
+  checkButton.classList.add("offButton");
+  checkButton.classList.remove("onButton");
+  compareButton.classList.add("offButton");
+  compareButton.classList.remove("onButton");
+  clearButton.classList.add("offButton");
+  clearButton.classList.remove("onButton");
+  regionDropDown.classList.add("offButton");
+  regionDropDown.classList.remove("onButton");
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -212,7 +230,12 @@ geolocationButton.addEventListener("click", (event) => {
   event.preventDefault();
   container.innerHTML = "";
   regionDropDown.selectedIndex = 0;
+  errorMessage.innerHTML = "";
   inputBox.value = "";
+  geolocationButton.classList.remove("offButton");
+  geolocationButton.classList.add("onButton");
+  regionDropDown.classList.add("offButton");
+  regionDropDown.classList.remove("onButton");
 
   navigator.geolocation.getCurrentPosition(geoToPostcode, error, options);
 });
@@ -285,10 +308,20 @@ const displayData = (data, elementId) => {
   if (containerChildren.length >= 1) {
     regionDropDown.disabled = true;
     compareButton.disabled = true;
+    regionDropDown.classList.add("offButton");
+    regionDropDown.classList.remove("onButton");
+    compareButton.classList.add("offButton");
+    compareButton.classList.remove("onButton");
   } else {
     regionDropDown.disabled = false;
+    regionDropDown.classList.remove("offButton");
+    regionDropDown.classList.add("onButton");
     compareButton.disabled = false;
+    compareButton.classList.remove("offButton");
+    compareButton.classList.add("onButton");
     clearButton.disabled = false;
+    clearButton.classList.remove("offButton");
+    clearButton.classList.add("onButton");
   }
 
   if (data) {
