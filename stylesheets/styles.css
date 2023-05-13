@@ -8,11 +8,34 @@
 }
 
 body > * {
-  margin: 1rem;
+  /* margin: 1rem; */
+}
+
+header {
+  margin-right: 1rem;
+}
+
+.header-titles {
+  display: flex;
 }
 
 .title {
   font-size: 2rem;
+
+  border-radius: 0;
+  border: 0.1rem solid black;
+  width: 100%;
+  border: 0.2rem solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px,
+    5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  /* margin: 0; */
+
+  max-width: 55rem;
 }
 
 .sub-header {
@@ -35,7 +58,6 @@ body > * {
 
 .flex-container {
   font-size: 1.25rem;
-  border: 0.01rem solid grey;
   display: flex;
 }
 
@@ -46,7 +68,7 @@ body > * {
 
 .flex-container div * {
   border: 0.1rem solid grey;
-  margin: 0;
+  /* margin: 0; */
 }
 
 /* Additional plugins  */
@@ -125,12 +147,11 @@ form {
   font-size: 1.25rem;
   justify-content: flex-start;
   align-items: center;
-  gap: 0.25rem;
-  margin: 0.25rem;
-}
-
-div {
-  margin: 0.25rem;
+  gap: 1rem;
+  margin-right: 0.25rem;
+  /* min-width: 20rem; */
+  max-width: 55rem;
+  margin-left: 0;
 }
 
 ::placeholder {
@@ -181,8 +202,7 @@ option {
 }
 
 .button {
-  width: 7rem;
-  margin-right: 0.75rem;
+  width: 6.5rem;
 }
 /* 
 .geolocation-button {
@@ -190,8 +210,8 @@ option {
 } */
 
 .geo-button {
-  width: 3.75rem;
-  height: 100%;
+  width: 3.5rem;
+  height: 3.5rem;
   background-color: transparent;
   padding: auto;
   display: flex;
@@ -228,9 +248,88 @@ option {
 
 .clear-button {
   margin-top: 1.5rem;
-  margin-left: 0.25rem;
 }
 
 .small-title {
   font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+.form-container {
+  /* display: flex; */
+}
+
+.loader {
+  position: relative;
+  top: 2.5rem;
+  left: 3.25rem;
+  height: 5px;
+  width: 5px;
+  color: #000000;
+  box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, -10px -10px 0 5px,
+    -10px -10px 0 5px;
+  animation: loader-38 6s infinite;
+}
+
+@keyframes loader-38 {
+  0% {
+    box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, -10px -10px 0 5px,
+      -10px -10px 0 5px;
+  }
+  8.33% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px -10px 0 5px,
+      10px -10px 0 5px;
+  }
+  16.66% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      10px 10px 0 5px;
+  }
+  24.99% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  33.32% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      -10px -10px 0 5px;
+  }
+  41.65% {
+    box-shadow: 10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      10px -10px 0 5px;
+  }
+  49.98% {
+    box-shadow: 10px 10px 0 5px, 10px 10px 0 5px, 10px 10px 0 5px,
+      10px 10px 0 5px;
+  }
+  58.31% {
+    box-shadow: -10px 10px 0 5px, -10px 10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  66.64% {
+    box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  74.97% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  83.3% {
+    box-shadow: -10px -10px 0 5px, 10px 10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  91.63% {
+    box-shadow: -10px -10px 0 5px, -10px 10px 0 5px, -10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  100% {
+    box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, -10px -10px 0 5px,
+      -10px -10px 0 5px;
+  }
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  font-size: 1rem;
+  padding: 0;
+  margin: 0;
 }

@@ -15,6 +15,7 @@ import {
   errorMessage,
   errorText,
   inputBox,
+  spinner,
 } from "./static.js";
 
 import { log, timeStampToLocal, currentISO } from "./utils.js";
@@ -262,6 +263,8 @@ setRegions();
 // MAIN FUNCTIONS TO TALK TO API:
 // a function to get data from the API
 const getData = async (locationData, url) => {
+  spinner.innerHTML = `<span class="loader"></span>`;
+
   const copiedUrl = url.slice();
   const splitUrl = copiedUrl.split("/");
   const replaceable = splitUrl[splitUrl.length - 1];
@@ -305,6 +308,8 @@ const setProgress = (element, percent) => {
 
 // display the obtained data for the user
 const displayData = (data, elementId) => {
+  spinner.innerHTML = ``;
+
   const containerChildren = container.querySelectorAll("div");
 
   if (containerChildren.length >= 1) {

@@ -22,77 +22,90 @@
   </head>
   <body>
     <header>
-      <div class="sub-header">
+      <div class="sub-header header-titles">
         <h1 class="title">Carbon Intensity and Electricity Generation Mix</h1>
       </div>
 
       <div class="sub-header">
-        <div><h2 class="small-title">In Your Area</h2></div>
-        <form id="postcode" action="" method="post" class="form sub-header">
-          <div class="input-container">
-            <input
-              id="inputBox"
-              class="input-field"
-              type="text"
-              placeholder="Enter Your Postcode or Town"
-              name="postcode"
-            />
-          </div>
-
-          <div>
-            <button
-              class="button-54 offButton geo-button"
-              id="geolocationButton"
-            >
-              <img
-                src="./icons/geolocation.svg"
-                alt="geo-icon"
-                class="geo-icon"
+        <div class="sub-header header-titles">
+          <h2 class="small-title">In Your Area</h2>
+        </div>
+        <div class="form-container">
+          <form id="postcode" action="" method="post" class="form sub-header">
+            <div class="input-container">
+              <input
+                id="inputBox"
+                class="input-field"
+                type="text"
+                placeholder="Enter Your Postcode or Town"
+                name="postcode"
               />
-            </button>
+            </div>
 
-            <!-- <span
-              id="geolocationButton"
-              class="material-symbols-outlined offButton"
-            >
-              my_location
-            </span> -->
-          </div>
+            <div>
+              <button
+                class="button-54 offButton geo-button"
+                id="geolocationButton"
+              >
+                <img
+                  src="./icons/geolocation.svg"
+                  alt="geo-icon"
+                  class="geo-icon"
+                />
+              </button>
 
-          <div class="button">
-            <button
-              class="button-54 offButton"
-              role="button"
-              id="checkButton"
-              disabled
-            >
-              Check
-            </button>
-          </div>
-        </form>
+              <!-- <span
+                id="geolocationButton"
+                class="material-symbols-outlined offButton"
+              >
+                my_location
+              </span> -->
+            </div>
 
-        <div><h2 class="small-title">Compare to UK Regions</h2></div>
+            <div class="button">
+              <button
+                class="button-54 offButton"
+                role="button"
+                id="checkButton"
+                disabled
+              >
+                Check
+              </button>
+            </div>
+          </form>
+        </div>
 
-        <form id="regions" action="" method="post" class="form sub-header">
-          <div class="input-container">
-            <!-- <label for="regions">Select a UK Region:</label> -->
-            <select id="regionsList" name="regions" disabled class="offButton">
-              <option value="0" disabled selected>Select a UK Region</option>
-            </select>
-          </div>
+        <div class="sub-header header-titles">
+          <h2 class="small-title">Compare to UK Regions</h2>
+        </div>
 
-          <div class="button">
-            <button
-              class="button-54 offButton"
-              role="button"
-              id="compareButton"
-              name="regions"
-              disabled
-            >
-              Compare
-            </button>
-          </div>
-        </form>
+        <div class="form-container">
+          <form id="regions" action="" method="post" class="form sub-header">
+            <div class="input-container">
+              <!-- <label for="regions">Select a UK Region:</label> -->
+              <select
+                id="regionsList"
+                name="regions"
+                disabled
+                class="offButton"
+              >
+                <option value="0" disabled selected>Select a UK Region</option>
+              </select>
+            </div>
+
+            <div class="button">
+              <button
+                class="button-54 offButton"
+                role="button"
+                id="compareButton"
+                name="regions"
+                disabled
+              >
+                Compare
+              </button>
+            </div>
+          </form>
+        </div>
 
         <div class="button clear-button sub-header">
           <button
@@ -110,15 +123,17 @@
     </header>
 
     <main>
-      <div class="progress-bar">
+      <!-- <div class="progress-bar">
         <div class="progress" id="progress"></div>
-      </div>
+      </div> -->
+
+      <div id="spinner"></div>
 
       <div id="container" class="flex-container"></div>
     </main>
 
     <footer>
-      <p></p>
+      <p>&copy Kanan Garayev 2023</p>
     </footer>
   </body>
 </html>

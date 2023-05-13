@@ -61,6 +61,9 @@ export const errorMessage = document.getElementById("errorMessage");
 // select html element input box
 export const inputBox = document.getElementById("inputBox");
 
+// select html element input box
+export const spinner = document.getElementById("spinner");
+
 // error texts
 export const errorText = [
   "Please enter a valid UK area name or postcode.",
