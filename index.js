@@ -41,8 +41,7 @@ let nationalApiData;
 document.addEventListener("input", (event) => {
   userInput = event.target.value.trim();
   checkButton.disabled = false;
-  checkButton.classList.remove("offButton");
-  checkButton.classList.add("onButton");
+
   inputBox.classList.remove("offButton");
   inputBox.classList.add("onButton");
 });
@@ -86,8 +85,7 @@ compareButton.addEventListener("click", (event) => {
   compareButton.disabled = true;
   regionDropDown.classList.remove("offButton");
   regionDropDown.classList.add("onButton");
-  checkButton.classList.add("offButton");
-  checkButton.classList.remove("onButton");
+
   compareButton.classList.add("offButton");
   compareButton.classList.remove("onButton");
 });
@@ -105,8 +103,7 @@ clearButton.addEventListener("click", (event) => {
   clearButton.disabled = true;
   geolocationButton.classList.add("offButton");
   geolocationButton.classList.remove("onButton");
-  checkButton.classList.add("offButton");
-  checkButton.classList.remove("onButton");
+
   compareButton.classList.add("offButton");
   compareButton.classList.remove("onButton");
   clearButton.classList.add("offButton");

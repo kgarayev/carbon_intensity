@@ -32,39 +32,28 @@
         </div>
         <div class="form-container">
           <form id="postcode" action="" method="post" class="form sub-header">
-            <div class="input-container">
+            <div class="input-container brutal">
               <input
                 id="inputBox"
-                class="input-field brutal"
+                class="input-field"
                 type="text"
                 placeholder="Enter Your Postcode or Town"
                 name="postcode"
               />
-            </div>
-
-            <div>
-              <button
-                class="button-54 offButton geo-button brutal"
-                id="geolocationButton"
-              >
-                <img
-                  src="./icons/geolocation.svg"
-                  alt="geo-icon"
-                  class="geo-icon"
-                />
-              </button>
-
-              <!-- <span
-                id="geolocationButton"
-                class="material-symbols-outlined offButton"
-              >
-                my_location
-              </span> -->
+              <div>
+                <button class="offButton geo-button" id="geolocationButton">
+                  <img
+                    src="./icons/geolocation.svg"
+                    alt="geo-icon"
+                    class="geo-icon"
+                  />
+                </button>
+              </div>
             </div>
 
             <div class="button">
               <button
-                class="button-54 offButton brutal"
+                class="button-54 brutal"
                 role="button"
                 id="checkButton"
                 disabled
@@ -79,10 +68,9 @@
           <h2 class="small-title">Compare to UK Regions</h2>
         </div>
 
-        <div class="form-container">
+        <div class="form-container" id="compare">
           <form id="regions" action="" method="post" class="form sub-header">
             <div class="input-container">
-              <!-- <label for="regions">Select a UK Region:</label> -->
               <select
                 id="regionsList"
                 name="regions"
