@@ -263,6 +263,7 @@ setRegions();
 // MAIN FUNCTIONS TO TALK TO API:
 // a function to get data from the API
 const getData = async (locationData, url) => {
+  container.classList.remove("brutal");
   spinner.innerHTML = `<span class="loader"></span>`;
 
   const copiedUrl = url.slice();
@@ -301,11 +302,6 @@ const getData = async (locationData, url) => {
   }
 };
 
-// function to set a progress in a progress bar in css
-const setProgress = (element, percent) => {
-  element.style.width = percent + "%";
-};
-
 // display the obtained data for the user
 const displayData = (data, elementId) => {
   spinner.innerHTML = ``;
@@ -332,6 +328,8 @@ const displayData = (data, elementId) => {
   }
 
   if (data) {
+    container.classList.add("brutal");
+
     const region = data.shortname;
     const stats = data.data[0];
     const fromDate = stats.from;
@@ -344,12 +342,10 @@ const displayData = (data, elementId) => {
     updateDom(container.id, `div`, ``, elementId);
 
     updateDom(elementId, `h3`, `Region: ${region}`);
-    updateDom(
-      elementId,
-      `h4`,
-      `Time Period: ${timeStampToLocal(fromDate)} - ${timeStampToLocal(toDate)}`
-    );
-    updateDom(elementId, `h4`, `Carbon Intensity Data:`);
+    updateDom(elementId, `h4`, `Time Period`);
+    updateDom(elementId, `p`, `From: ${timeStampToLocal(fromDate)}`);
+    updateDom(elementId, `p`, `To: ${timeStampToLocal(toDate)}`);
+    updateDom(elementId, `h4`, `Carbon Intensity Data`);
     updateDom(
       elementId,
       `p`,
@@ -357,21 +353,29 @@ const displayData = (data, elementId) => {
     );
     updateDom(elementId, `p`, `Index: ${intensity.index}`);
 
-    updateDom(elementId, `h4`, `Electricity Generation Mix:`);
+    updateDom(elementId, `h4`, `Electricity Generation Mix`);
 
     generationMix.forEach((item) => {
-      for (let key in item) {
-        if (key === "fuel") {
-          const capitalised =
-            item[key].charAt(0).toUpperCase() + item[key].slice(1);
+      const capitalised =
+        item["fuel"].charAt(0).toUpperCase() + item["fuel"].slice(1);
 
-          updateDom(elementId, `h5`, `Fuel Type: `);
-          updateDom(elementId, `p`, `${capitalised}`);
-        } else {
-          updateDom(elementId, `h5`, `Percentage of Mix: `);
-          updateDom(elementId, `p`, `${item[key]}%`);
-        }
-      }
+      // updateDom(elementId, `h5`, `Fuel Type: `);
+      updateDom(elementId, `p`, `${capitalised}`);
+
+      updateDom(elementId, `p`, `${item["perc"]}%`);
+
+      updateDom(
+        elementId,
+        `div`,
+        `<div class="progress-bar">
+        <div class="progress" id="progress-${capitalised}"></div>
+      </div>`
+      );
+
+      const progressBar = document.getElementById(`progress-${capitalised}`);
+
+      // // Call the setProgress() function with a percentage value between 0 and 100 to update the progress bar
+      setProgress(progressBar, item["perc"]);
     });
   }
 };
@@ -402,7 +406,16 @@ const writeData = async (locationData, url, elementId) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ---------------------------------------------------------------------------------------------------------------------------
 
-const progressBar = document.getElementById("progress");
+// function to set a progress in a progress bar in css
+const setProgress = (element, percent) => {
+  if (percent === 0) {
+    element.style.width = 1 + "%";
+  } else {
+    element.style.width = percent + "%";
+  }
+};
 
-// Call the setProgress() function with a percentage value between 0 and 100 to update the progress bar
-setProgress(progressBar, 20);
+// const progressBar = document.getElementById("progress");
+
+// // Call the setProgress() function with a percentage value between 0 and 100 to update the progress bar
+// setProgress(progressBar, 20);
