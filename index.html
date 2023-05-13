@@ -23,13 +23,19 @@
   <body>
     <header>
       <div class="sub-header header-titles brutal main-title">
-        <h1 class="title">Carbon Intensity and Electricity Generation Mix</h1>
+        <h1 class="title">
+          UK Carbon Intensity and Electricity Generation Mix Bot
+        </h1>
       </div>
 
       <div class="sub-header">
         <div class="sub-header header-titles">
           <h2 class="small-title">In Your Area</h2>
         </div>
+        <p class="disclaimer">
+          Please enable location permissions to get local data, otherwise use
+          search
+        </p>
         <div class="form-container">
           <form id="postcode" action="" method="post" class="form sub-header">
             <div class="input-container brutal">
@@ -79,7 +85,9 @@
                 disabled
                 class="offButton brutal"
               >
-                <option value="0" disabled selected>Select a UK Region</option>
+                <option value="0" disabled selected>
+                  Select a British Region
+                </option>
               </select>
             </div>
 
@@ -97,15 +105,26 @@
           </form>
         </div>
 
-        <div class="button clear-button sub-header">
-          <button
-            class="button-54 offButton brutal"
-            role="button"
-            id="clearButton"
-            disabled
-          >
-            Clear All
-          </button>
+        <div class="header-bottom">
+          <div class="button clear-button sub-header">
+            <button
+              class="button-54 offButton brutal"
+              role="button"
+              id="clearButton"
+              disabled
+            >
+              Clear All
+            </button>
+          </div>
+
+          <div class="sort">
+            <select class="offButton brutal" id="sort" disabled>
+              <option value="placeholder" disabled selected>Sort</option>
+              <option value="0">Default</option>
+              <option value="ascending">Ascending</option>
+              <option value="descending">Descending</option>
+            </select>
+          </div>
         </div>
 
         <div class="sub-header"><p id="errorMessage"></p></div>

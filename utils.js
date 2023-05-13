@@ -13,3 +13,10 @@ export const currentISO = () => {
   log(isoString);
   return isoString;
 };
+
+export const sort = (list) => {
+  list.sort(function (a, b) {
+    return a - b;
+  });
+  return list;
+};

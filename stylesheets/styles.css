@@ -12,6 +12,7 @@ body {
 
 header {
   margin-top: 1rem;
+  width: 100%;
   /* margin-bottom: 3rem; */
 }
 
@@ -56,6 +57,7 @@ main * {
 }
 
 .sub-header {
+  width: 100%;
   margin-left: 0;
 }
 
@@ -82,11 +84,17 @@ main * {
 }
 
 .flex-container h3 {
-  height: 5.5rem;
+  height: 5rem;
 }
 
 .flex-container h4 {
-  height: 3rem;
+  height: 2rem;
+  margin-top: 2rem;
+}
+
+.flex-container h5 {
+  font-weight: 500;
+  height: 2.5rem;
   margin-top: 2rem;
 }
 
@@ -151,6 +159,7 @@ main * {
 .input-container {
   flex-grow: 2;
   display: flex;
+  align-items: center;
 }
 
 form {
@@ -168,13 +177,13 @@ form {
 
 ::placeholder {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 500;
 }
 
 select {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 500;
   border-radius: 0;
   border: 0.1rem solid rgb(87, 86, 86);
@@ -185,19 +194,19 @@ select {
 
 option {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 500;
 
   height: 3rem;
 }
 
 .button {
-  width: 6.75rem;
+  width: 7rem;
 }
 
 .geo-button {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2rem;
+  height: 2rem;
   background-color: transparent;
   padding: auto;
   display: flex;
@@ -205,6 +214,13 @@ option {
   align-items: center;
   border: none;
   /* border: 0.1rem grey solid; */
+}
+
+.input-container div {
+  /* border: 0.1rem grey solid; */
+  padding: auto;
+  width: 2rem;
+  height: 2rem;
 }
 
 .geo-button:hover {
@@ -235,7 +251,8 @@ option {
 }
 
 .clear-button {
-  margin-top: 3rem;
+  margin-top: 2rem;
+  width: 7.25rem;
 }
 
 .small-title {
@@ -363,7 +380,7 @@ input:focus {
 
 input {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 1rem;
+  font-size: 1.15rem;
 }
 
 select:focus {
@@ -372,4 +389,29 @@ select:focus {
 
 option:focus {
   outline: none;
+}
+
+.disclaimer {
+  font-size: 1.15rem;
+}
+
+.header-bottom {
+  display: flex;
+  /* border: 0.1rem solid grey; */
+  align-items: baseline;
+  gap: 2rem;
+  max-width: 55rem;
+}
+
+.header-bottom div {
+  /* border: 0.1rem solid grey; */
+}
+
+.header-bottom * {
+  /* border: 0.1rem solid grey; */
+  /* width: 100%; */
+}
+
+.sort {
+  flex-grow: 2;
 }

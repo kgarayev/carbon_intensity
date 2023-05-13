@@ -64,6 +64,9 @@ export const inputBox = document.getElementById("inputBox");
 // select html element input box
 export const spinner = document.getElementById("spinner");
 
+// select sort dropdown
+export const sortList = document.getElementById("sort");
+
 // error texts
 export const errorText = [
   "Please enter a valid area name or postcode in Britain.",

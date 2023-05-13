@@ -16,9 +16,10 @@ import {
   errorText,
   inputBox,
   spinner,
+  sortList,
 } from "./static.js";
 
-import { log, timeStampToLocal, currentISO } from "./utils.js";
+import { log, timeStampToLocal, sort, currentISO } from "./utils.js";
 
 // final postcode in suitable format
 let finalPostcode;
@@ -31,6 +32,12 @@ let localApiData;
 
 // variable for the national data from API
 let nationalApiData;
+
+// state for the sorted data
+let sortedMix = { options: {}, default: {} };
+
+// define state
+let state = {};
 
 // ---------------------------------------------------------------------------------------------------------------------------
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,15 +54,6 @@ document.addEventListener("input", (event) => {
 });
 
 checkButton.focus();
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    // Check if button1 is focused and trigger its click event
-    if (document.activeElement === checkButton) {
-      checkButton.click();
-    }
-  }
-});
 
 // submit the final user input and validate
 document.getElementById("checkButton").addEventListener("click", (event) => {
@@ -96,7 +94,9 @@ compareButton.addEventListener("click", (event) => {
   event.preventDefault();
   const selectedOption = regionDropDown.value;
 
-  log(selectedOption);
+  // log(selectedOption);
+
+  errorMessage.innerHTML = ``;
 
   if (selectedOption == 0) {
     errorMessage.innerHTML = errorText[2];
@@ -117,6 +117,48 @@ compareButton.addEventListener("click", (event) => {
 
   compareButton.classList.add("offButton");
   compareButton.classList.remove("onButton");
+
+  sortList.value = "placeholder";
+});
+
+// event listener to listen to sort selection
+sortList.addEventListener("change", (event) => {
+  log(event.target.value);
+  const sortOrder = event.target.value;
+
+  container.innerHTML = ``;
+
+  log(sortOrder);
+
+  if (sortOrder == 0) {
+    log("deault option selected");
+    for (let key in state) {
+      displayData(state[key], key, false);
+    }
+    log(sortedMix);
+  } else {
+    log("sort option selected");
+    for (let key in sortedMix.options) {
+      switch (sortOrder) {
+        case "ascending":
+          sortedMix.options[key].sort((a, b) => {
+            return a.perc - b.perc;
+          });
+          break;
+        case "descending":
+          sortedMix.options[key].sort((a, b) => {
+            return b.perc - a.perc;
+          });
+          break;
+      }
+    }
+
+    for (let key in state) {
+      displayData(state[key], key, true);
+    }
+
+    log(sortedMix);
+  }
 });
 
 // clear the container
@@ -139,6 +181,12 @@ clearButton.addEventListener("click", (event) => {
   clearButton.classList.remove("onButton");
   regionDropDown.classList.add("offButton");
   regionDropDown.classList.remove("onButton");
+
+  sortList.value = "placeholder";
+
+  sortList.disabled = true;
+  sortList.classList.add("offButton");
+  sortList.classList.remove("onButton");
 
   if (document.getElementById("local")) {
     document.getElementById("local").classList.remove("brutal");
@@ -213,7 +261,6 @@ const locationCheck = async (input) => {
           const long = data[i].lon;
           const coordData = { coords: { latitude: lat, longitude: long } };
           geoToPostcode(coordData);
-          log("sik");
           return true;
         }
       }
@@ -329,7 +376,7 @@ const getData = async (locationData, url) => {
       );
 
       localApiData = d.data[0];
-      log(localApiData);
+      // log(localApiData);
       return localApiData;
     }
 
@@ -364,7 +411,7 @@ const getData = async (locationData, url) => {
 };
 
 // display the obtained data for the user
-const displayData = (data, elementId) => {
+const displayData = (data, elementId, toSort = false) => {
   spinner.innerHTML = ``;
 
   const containerChildren = container.querySelectorAll("div");
@@ -394,7 +441,7 @@ const displayData = (data, elementId) => {
     const fromDate = stats.from;
     const toDate = stats.to;
     const intensity = stats.intensity;
-    const generationMix = stats.generationmix;
+    let generationMix = stats.generationmix;
 
     // document.getElementById(container.id).innerHTML = "";
 
@@ -402,24 +449,32 @@ const displayData = (data, elementId) => {
 
     const brutalElement = document.getElementById(elementId);
 
-    log(elementId);
-    log(brutalElement);
-
     brutalElement.classList.add("brutal");
 
     updateDom(elementId, `h3`, `${region}`);
     updateDom(elementId, `h4`, `Time Period`);
-    updateDom(elementId, `p`, `From: ${timeStampToLocal(fromDate)}`);
-    updateDom(elementId, `p`, `To: ${timeStampToLocal(toDate)}`);
+    updateDom(elementId, `h5`, `From: ${timeStampToLocal(fromDate)}`);
+    updateDom(elementId, `h5`, `To: ${timeStampToLocal(toDate)}`);
     updateDom(elementId, `h4`, `Carbon Intensity Data`);
     updateDom(
       elementId,
-      `p`,
+      `h5`,
       `Forecast: ${intensity.forecast} gCO<sub>2</sub>/kWh`
     );
-    updateDom(elementId, `p`, `Index: ${intensity.index}`);
+    updateDom(elementId, `h5`, `Index: ${intensity.index}`);
 
     updateDom(elementId, `h4`, `Electricity Generation Mix`);
+
+    if (toSort) {
+      log(sortedMix.options[elementId]);
+      generationMix = sortedMix.options[elementId].slice();
+      log(generationMix);
+    } else {
+      log(sortedMix);
+      sortedMix.default[elementId] = generationMix.slice();
+      sortedMix.options[elementId] = generationMix.slice();
+      log(sortedMix);
+    }
 
     generationMix.forEach((item) => {
       const capitalised =
@@ -448,7 +503,7 @@ const displayData = (data, elementId) => {
       const progressBar = document.getElementById(
         `${elementId}Progress${capitalised}`
       );
-      log(progressBar);
+      // log(progressBar);
 
       // // Call the setProgress() function with a percentage value between 0 and 100 to update the progress bar
       setProgress(progressBar, item["perc"]);
@@ -458,6 +513,10 @@ const displayData = (data, elementId) => {
       );
       showPercentage.innerHTML = `${item["perc"]}%`;
     });
+
+    sortList.disabled = false;
+    sortList.classList.remove("offButton");
+    sortList.classList.add("onButton");
   }
 };
 
@@ -474,7 +533,9 @@ const writeData = async (locationData, url, elementId) => {
   try {
     if (locationData) {
       const data = await getData(locationData, url);
-      log(elementId);
+      // log(data);
+      state[elementId] = Object.assign({}, data);
+      log(state);
       displayData(data, elementId);
       return;
     }
