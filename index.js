@@ -63,6 +63,10 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
   regionDropDown.selectedIndex = 0;
   // inputBox.value = "";
 
+  state = {};
+  sortedMix.options = {};
+  sortedMix.default = {};
+
   if (userInput) {
     locationCheck(userInput);
   } else {
@@ -81,6 +85,10 @@ inputBox.addEventListener("keydown", (event) => {
     regionDropDown.selectedIndex = 0;
     // inputBox.value = "";
 
+    state = {};
+    sortedMix.options = {};
+    sortedMix.default = {};
+
     if (userInput) {
       locationCheck(userInput);
     } else {
@@ -95,6 +103,10 @@ inputBox.addEventListener("keydown", (event) => {
 compareButton.addEventListener("click", (event) => {
   event.preventDefault();
   const selectedOption = regionDropDown.value;
+
+  // state = {};
+  // sortedMix.options = {};
+  // sortedMix.default = {};
 
   // log(selectedOption);
 
@@ -126,6 +138,9 @@ compareButton.addEventListener("click", (event) => {
 
 // event listener to listen to sort selection
 sortList.addEventListener("change", (event) => {
+  // sortedMix.options = {};
+  // sortedMix.default = {};
+
   log(event.target.value);
   const sortOrder = event.target.value;
 
@@ -186,6 +201,11 @@ clearButton.addEventListener("click", (event) => {
   regionDropDown.classList.remove("onButton");
 
   sortList.value = "placeholder";
+
+  state = {};
+
+  sortedMix.options = {};
+  sortedMix.default = {};
 
   sortList.disabled = true;
   sortList.classList.add("offButton");
@@ -329,6 +349,19 @@ geolocationButton.addEventListener("click", (event) => {
   geolocationButton.classList.add("onButton");
   regionDropDown.classList.add("offButton");
   regionDropDown.classList.remove("onButton");
+
+  state = {};
+
+  sortedMix.options = {};
+  sortedMix.default = {};
+
+  log(sortedMix);
+
+  sortList.value = "placeholder";
+
+  sortList.disabled = true;
+  sortList.classList.add("offButton");
+  sortList.classList.remove("onButton");
 
   navigator.geolocation.getCurrentPosition(geoToPostcode, error, options);
 });
@@ -474,7 +507,7 @@ const displayData = (data, elementId, toSort = false) => {
     updateDom(elementId, `h4`, `Electricity Generation Mix`);
 
     if (toSort) {
-      log(sortedMix.options[elementId]);
+      log(sortedMix);
       generationMix = sortedMix.options[elementId].slice();
       log(generationMix);
     } else {

@@ -79,7 +79,7 @@ main * {
 }
 
 .flex-container {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   max-width: var(--max-width);
   display: flex;
   gap: 1rem;
