@@ -418,16 +418,22 @@ option:focus {
 
 /* toasts  */
 
+.toastDiv {
+  position: relative;
+  /* border: 0.1rem solid grey; */
+}
+
 .toast {
   position: absolute;
-  bottom: 3rem;
+  top: 1rem;
   border: 0.01rem solid rgb(0, 0, 0);
   background-color: var(--toast-color);
   overflow: hidden;
   transform: translateX(calc(-100% - 5rem));
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
-  width: 25rem;
-  height: 6.5rem;
+  width: 27rem;
+  height: 6rem;
+  z-index: 1;
 }
 
 .toast.active {
@@ -448,20 +454,18 @@ option:focus {
 
 .message .text {
   font-size: 1.25rem;
-  font-weight: 400;
+  padding-top: 0.25rem;
+  font-weight: 500;
   color: #000000;
   background-color: var(--toast-color);
-}
-
-.message .text.text-1 {
-  font-weight: 600;
+  width: 23rem;
 }
 
 .toast .close {
   position: absolute;
   height: 1rem;
   width: 1rem;
-  top: 0.5rem;
+  top: 0.15rem;
   right: 1.25rem;
   /* padding: 0.25rem; */
   cursor: pointer;
@@ -487,7 +491,7 @@ option:focus {
 .toast .progress:before {
   content: "";
   position: absolute;
-  bottom: 0;
+  /* bottom: 0; */
   right: 0;
   height: 100%;
   width: 100%;

@@ -58,7 +58,7 @@ checkButton.focus();
 // submit the final user input and validate
 document.getElementById("checkButton").addEventListener("click", (event) => {
   event.preventDefault();
-  errorMessage.innerHTML = "";
+  // errorMessage.innerHTML = "";
   container.innerHTML = "";
   regionDropDown.selectedIndex = 0;
   // inputBox.value = "";
@@ -67,7 +67,7 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
     locationCheck(userInput);
   } else {
     toastError(errorText[0]);
-    errorMessage.innerHTML = errorText[0];
+    // errorMessage.innerHTML = errorText[0];
     return;
   }
 });
@@ -76,7 +76,7 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
 inputBox.addEventListener("keydown", (event) => {
   if (event.key === `Enter`) {
     event.preventDefault();
-    errorMessage.innerHTML = "";
+    // errorMessage.innerHTML = "";
     container.innerHTML = "";
     regionDropDown.selectedIndex = 0;
     // inputBox.value = "";
@@ -85,7 +85,7 @@ inputBox.addEventListener("keydown", (event) => {
       locationCheck(userInput);
     } else {
       toastError(errorText[0]);
-      errorMessage.innerHTML = errorText[0];
+      // errorMessage.innerHTML = errorText[0];
       return;
     }
   }
@@ -98,11 +98,11 @@ compareButton.addEventListener("click", (event) => {
 
   // log(selectedOption);
 
-  errorMessage.innerHTML = ``;
+  // errorMessage.innerHTML = ``;
 
   if (selectedOption == 0) {
     toastError(errorText[0]);
-    errorMessage.innerHTML = errorText[2];
+    // errorMessage.innerHTML = errorText[2];
     return;
   }
   inputBox.value = "";
@@ -167,7 +167,7 @@ sortList.addEventListener("change", (event) => {
 // clear the container
 clearButton.addEventListener("click", (event) => {
   event.preventDefault();
-  errorMessage.innerHTML = "";
+  // errorMessage.innerHTML = "";
   container.innerHTML = "";
   inputBox.value = "";
   regionDropDown.selectedIndex = 0;
@@ -221,7 +221,7 @@ const postcodeValidator = (input) => {
         finalPostcode = response.replace(/\s+/g, "").slice(0, -3);
         //   log(finalPostcode);
 
-        errorMessage.innerHTML = "";
+        // errorMessage.innerHTML = "";
         resolve(true);
       }
     });
@@ -269,15 +269,15 @@ const locationCheck = async (input) => {
       }
     } else {
       toastError(errorText[0]);
-      errorMessage.innerHTML = errorText[0];
+      // errorMessage.innerHTML = errorText[0];
       return false;
     }
   } catch (error) {
     toastError(errorText[0]);
-    errorMessage.innerHTML = errorText[0];
+    // errorMessage.innerHTML = errorText[0];
   }
   toastError(errorText[0]);
-  errorMessage.innerHTML = errorText[0];
+  // errorMessage.innerHTML = errorText[0];
 };
 
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -323,7 +323,7 @@ geolocationButton.addEventListener("click", (event) => {
   event.preventDefault();
   container.innerHTML = "";
   regionDropDown.selectedIndex = 0;
-  errorMessage.innerHTML = "";
+  // errorMessage.innerHTML = "";
   inputBox.value = "";
   geolocationButton.classList.remove("offButton");
   geolocationButton.classList.add("onButton");
@@ -413,12 +413,13 @@ const getData = async (locationData, url) => {
   } catch (error) {
     log(error);
     toastError(errorText[1]);
-    errorMessage.innerHTML = errorText[1];
+    // errorMessage.innerHTML = errorText[1];
   }
 };
 
 // display the obtained data for the user
 const displayData = (data, elementId, toSort = false) => {
+  clearToast();
   spinner.innerHTML = ``;
 
   const containerChildren = container.querySelectorAll("div");
@@ -550,7 +551,7 @@ const writeData = async (locationData, url, elementId) => {
   } catch (error) {
     log(error);
     toastError(errorText[1]);
-    errorMessage.innerHTML = errorText[1];
+    // errorMessage.innerHTML = errorText[1];
   }
 };
 
@@ -568,18 +569,23 @@ const setProgress = (element, percent) => {
 const toast = document.getElementById("toast");
 const closeIcon = document.getElementById("toastClose");
 const progress = document.getElementById("progress");
+const toastText = document.getElementById("toastText");
+const toastWrapper = document.getElementById("toastDiv");
 
 let timer1;
 let timer2;
 
 const toastError = (message) => {
   log(message);
+  toastWrapper.style.height = "9rem";
 
   toast.classList.add("active");
   progress.classList.add("active");
+  toastText.innerHTML = message;
 
   timer1 = setTimeout(() => {
     toast.classList.remove("active");
+    toastWrapper.style.height = "0.5rem";
   }, 5000);
 
   timer2 = setTimeout(() => {
@@ -590,11 +596,17 @@ const toastError = (message) => {
 closeIcon.addEventListener("click", () => {
   toast.classList.remove("active");
   progress.classList.remove("active");
-
-  // setTimeout(() => {
-  //   progress.classList.remove("active");
-  // }, 10);
+  toastWrapper.style.height = "0.5rem";
 
   clearTimeout(timer1);
   clearTimeout(timer2);
 });
+
+const clearToast = () => {
+  toast.classList.remove("active");
+  progress.classList.remove("active");
+  toastWrapper.style.height = "0.5rem";
+
+  clearTimeout(timer1);
+  clearTimeout(timer2);
+};
