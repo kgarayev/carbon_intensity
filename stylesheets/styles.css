@@ -20,9 +20,20 @@ header {
 .header-titles {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1rem;
   /* max-width: 55rem; */
   max-width: var(--max-width);
+}
+
+.flags {
+  flex-grow: 1;
+  display: flex;
+  min-width: 2rem;
+  max-width: 4rem;
+  gap: 0.25rem;
+  /* border: 0.01rem solid grey; */
+  padding-bottom: 0.5rem;
 }
 
 .main-title {
@@ -63,6 +74,48 @@ main * {
   margin-left: 0;
 }
 
+.progressDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.fuel-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.fuel-icon img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.intensity {
+  flex-direction: column;
+  /* border: 0.1rem solid grey; */
+}
+
+.intensity h5 {
+  /* border: 0.1rem solid grey; */
+}
+
+.intensity-index {
+  gap: 0.5rem;
+}
+
+.intensity-icon {
+  /* width: 3rem; */
+  height: 3rem;
+  /* border: 0.1rem solid grey; */
+  height: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.intensity-icon svg {
+  width: 3rem;
+  height: 3rem;
+}
+
 .progressBar {
   position: relative;
   height: 2.5rem;
@@ -70,6 +123,7 @@ main * {
   margin-bottom: 0.5rem;
   /* border: 0.01rem rgb(87, 86, 86) solid; */
   display: flex;
+  width: 100%;
 }
 
 .progress {
@@ -79,10 +133,14 @@ main * {
 }
 
 .flex-container {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   max-width: var(--max-width);
   display: flex;
   gap: 1rem;
+}
+
+.flex-container h2 {
+  height: 6rem;
 }
 
 .flex-container h3 {
@@ -101,11 +159,15 @@ main * {
 }
 
 .flex-container p {
-  height: 2rem;
+  /* height: 3rem; */
+  /* margin-top: 2rem; */
+  margin-bottom: 0rem;
+  margin-top: 2rem;
 }
 
 .flex-container > div > div {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
+  /* margin-bottom: 2rem; */
 }
 
 .percentage {
@@ -208,9 +270,10 @@ option {
 }
 
 .geo-button {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background-color: transparent;
+  margin-top: 0.25rem;
   padding: auto;
   display: flex;
   justify-content: center;
@@ -234,8 +297,8 @@ option {
 .geo-icon {
   margin: 0;
   /* width: 100%; */
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2rem;
+  width: 2rem;
   background-color: transparent;
   filter: opacity(40%);
 }

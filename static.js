@@ -19,6 +19,48 @@ export const regions = {
   17: "Wales",
 };
 
+export const fuelIcons = {
+  Biomass: `<img src="./icons/bio4.svg" alt="biomass" />`,
+  Coal: `<img src="./icons/coal.svg" alt="coal">`,
+  Imports: `<img src="./icons/import2.svg" alt="imports">`,
+  Gas: `<img src="./icons/flame.svg" alt="gas" />`,
+  Nuclear: `<img src="./icons/nuclear2.svg" alt="nuclear" />`,
+  Other: `<img src="./icons/other2.svg" alt="other" />`,
+  Hydro: `<img src="./icons/hydro.svg" alt="hydro" />`,
+  Solar: `<img src="./icons/sun3.svg" alt="solar" />`,
+  Wind: `<img src="./icons/wind.svg" alt="wind" />`,
+};
+
+export const intensityIcons = {
+  "very high": ` <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 25 10 L 40 30 L 35 30 L 35 42 L 25 42 L 25 50 L 25 42 L 15 42 L 15 30 L 10 30 L 25 10 Z" fill="red"/>
+                  </svg>
+
+                  <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M 25 10 L 40 30 L 35 30 L 35 42 L 25 42 L 25 50 L 25 42 L 15 42 L 15 30 L 10 30 L 25 10 Z" fill="red"/>
+                  </svg>`,
+
+  high: `<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 25 10 L 40 30 L 35 30 L 35 42 L 25 42 L 25 50 L 25 42 L 15 42 L 15 30 L 10 30 L 25 10 Z" fill="red"/>
+        </svg>`,
+
+  moderate: `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="6" viewBox="0 0 30 6">
+                <rect x="0" y="0" width="30" height="6" fill="#FFBF00"/>
+              </svg>`,
+
+  low: `<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 25 40 L 40 20 L 35 20 L 35 10 L 15 10 L 15 20 L 10 20 L 25 40 Z" fill="green"/>
+        </svg>`,
+
+  "very low": `<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 25 40 L 40 20 L 35 20 L 35 10 L 15 10 L 15 20 L 10 20 L 25 40 Z" fill="green"/>
+                </svg>
+
+                <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 25 40 L 40 20 L 35 20 L 35 10 L 15 10 L 15 20 L 10 20 L 25 40 Z" fill="green"/>
+                </svg>`,
+};
+
 // set a variable with the API URL for POSTCODES
 export const POSTCODE_API_URL = `https://api.carbonintensity.org.uk/regional/postcode/{postcode}`;
 

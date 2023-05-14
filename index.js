@@ -1,5 +1,7 @@
 import {
   regions,
+  fuelIcons,
+  intensityIcons,
   POSTCODE_API_URL,
   REGIONAL_API_URL,
   NATIONAL_API_URL_INTENSITY,
@@ -492,17 +494,26 @@ const displayData = (data, elementId, toSort = false) => {
 
     brutalElement.classList.add("brutal");
 
-    updateDom(elementId, `h3`, `${region}`);
+    updateDom(elementId, `h2`, `${region}`);
     updateDom(elementId, `h4`, `Time Period`);
     updateDom(elementId, `h5`, `From: ${timeStampToLocal(fromDate)}`);
     updateDom(elementId, `h5`, `To: ${timeStampToLocal(toDate)}`);
     updateDom(elementId, `h4`, `Carbon Intensity Data`);
     updateDom(
       elementId,
-      `h5`,
-      `Forecast: ${intensity.forecast} gCO<sub>2</sub>/kWh`
+      `div`,
+      `<div class="intensity" id="${intensity.index}-${region}">
+          <h5>Forecast: ${intensity.forecast} gCO<sub>2</sub>/kWh</h5>
+          <div class="intensity-index" style="display:flex">
+            <h5>Index: ${intensity.index}</h5>
+            <div class="intensity-icon" style="display:flex">${
+              intensityIcons[intensity.index]
+            }</div>
+          </div>
+
+      </div>`
     );
-    updateDom(elementId, `h5`, `Index: ${intensity.index}`);
+    // updateDom(elementId, `h5`, `Index: ${intensity.index}`);
 
     updateDom(elementId, `h4`, `Electricity Generation Mix`);
 
@@ -529,7 +540,9 @@ const displayData = (data, elementId, toSort = false) => {
       updateDom(
         elementId,
         `div`,
-        `<div class="progessDiv">
+        `<div class="progressDiv" id="progressDiv${capitalised}">
+            <div class="fuel-icon">${fuelIcons[capitalised]}</div>
+
             <div class="progressBar">
 
               <div class="progress" id="${elementId}Progress${capitalised}">
@@ -540,6 +553,9 @@ const displayData = (data, elementId, toSort = false) => {
             </div> 
          </div>`
       );
+
+      document.getElementById(`progressDiv${capitalised}`).style.display =
+        "flex";
 
       const progressBar = document.getElementById(
         `${elementId}Progress${capitalised}`
