@@ -66,6 +66,7 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
   if (userInput) {
     locationCheck(userInput);
   } else {
+    toastError(errorText[0]);
     errorMessage.innerHTML = errorText[0];
     return;
   }
@@ -83,6 +84,7 @@ inputBox.addEventListener("keydown", (event) => {
     if (userInput) {
       locationCheck(userInput);
     } else {
+      toastError(errorText[0]);
       errorMessage.innerHTML = errorText[0];
       return;
     }
@@ -99,6 +101,7 @@ compareButton.addEventListener("click", (event) => {
   errorMessage.innerHTML = ``;
 
   if (selectedOption == 0) {
+    toastError(errorText[0]);
     errorMessage.innerHTML = errorText[2];
     return;
   }
@@ -265,12 +268,15 @@ const locationCheck = async (input) => {
         }
       }
     } else {
+      toastError(errorText[0]);
       errorMessage.innerHTML = errorText[0];
       return false;
     }
   } catch (error) {
+    toastError(errorText[0]);
     errorMessage.innerHTML = errorText[0];
   }
+  toastError(errorText[0]);
   errorMessage.innerHTML = errorText[0];
 };
 
@@ -406,6 +412,7 @@ const getData = async (locationData, url) => {
     }
   } catch (error) {
     log(error);
+    toastError(errorText[1]);
     errorMessage.innerHTML = errorText[1];
   }
 };
@@ -542,6 +549,7 @@ const writeData = async (locationData, url, elementId) => {
     return;
   } catch (error) {
     log(error);
+    toastError(errorText[1]);
     errorMessage.innerHTML = errorText[1];
   }
 };
@@ -555,7 +563,38 @@ const setProgress = (element, percent) => {
   element.style.width = 1 + percent + "%";
 };
 
-// const progressBar = document.getElementById("progress");
+// toasting
 
-// // Call the setProgress() function with a percentage value between 0 and 100 to update the progress bar
-// setProgress(progressBar, 20);
+const toast = document.getElementById("toast");
+const closeIcon = document.getElementById("toastClose");
+const progress = document.getElementById("progress");
+
+let timer1;
+let timer2;
+
+const toastError = (message) => {
+  log(message);
+
+  toast.classList.add("active");
+  progress.classList.add("active");
+
+  timer1 = setTimeout(() => {
+    toast.classList.remove("active");
+  }, 5000);
+
+  timer2 = setTimeout(() => {
+    progress.classList.remove("active");
+  }, 5300);
+};
+
+closeIcon.addEventListener("click", () => {
+  toast.classList.remove("active");
+  progress.classList.remove("active");
+
+  // setTimeout(() => {
+  //   progress.classList.remove("active");
+  // }, 10);
+
+  clearTimeout(timer1);
+  clearTimeout(timer2);
+});

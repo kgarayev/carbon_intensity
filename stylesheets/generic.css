@@ -15,6 +15,7 @@
   color: rgb(87, 86, 86);
   color-scheme: light only;
   color-scheme: light;
+  --toast-color: rgb(255, 243, 224);
 }
 
 div {
@@ -62,6 +63,6 @@ a {
   /* You MUST make sure that links stand out from nomal text though...*/
 }
 
+/* Dark mode styles */
 @media (prefers-color-scheme: light) {
-  /* Styles for light mode go here */
 }

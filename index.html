@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carbon Intensity near You</title>
+    <title>Carbon Intensity Bot</title>
     <link rel="stylesheet" href="./stylesheets/generic.css" />
     <link rel="stylesheet" href="./stylesheets/styles.css" />
     <link
@@ -128,6 +128,26 @@
         </div>
 
         <div class="sub-header"><p id="errorMessage"></p></div>
+
+        <div>
+          <div id="toast" class="toast brutal">
+            <div class="toast-content">
+              <div class="message">
+                <span class="text text-1">Success</span>
+                <span class="text text-2">Your changes has been saved</span>
+              </div>
+            </div>
+            <div id="toastClose" class="fa-solid fa-xmark close">
+              <img
+                class="close-icon"
+                src="./icons/close.svg"
+                alt="close icon"
+              />
+            </div>
+
+            <div id="progress" class="progress"></div>
+          </div>
+        </div>
       </div>
     </header>
 
