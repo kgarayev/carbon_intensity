@@ -1,0 +1,59 @@
+/* responsive elements  */
+
+@media screen and (min-width: 350px) {
+}
+
+@media screen and (min-width: 650px) {
+  :root {
+    font-size: 10.5px;
+  }
+
+  header {
+    --max-width: 100%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  :root {
+    font-size: 11px;
+  }
+
+  body {
+    width: 92.5%;
+  }
+
+  .header-top {
+    width: 32rem;
+  }
+
+  .body-container {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .placeholder {
+    height: 0.5rem;
+  }
+
+  header {
+    width: 35rem;
+  }
+
+  main {
+    width: 100%;
+  }
+
+  .header-titles {
+    margin-bottom: 1rem;
+  }
+
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+@media screen and (min-width: 1250px) {
+  :root {
+    font-size: 11.5px;
+  }
+}

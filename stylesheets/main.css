@@ -1,0 +1,176 @@
+/* css for main element  */
+
+main {
+  margin: 0;
+  margin-bottom: 10rem;
+}
+
+main * {
+  margin: 0;
+  border: none;
+}
+
+/* percentage bar  */
+.progressDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+/* icons for fuel types  */
+.fuel-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.fuel-icon img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.intensity {
+  flex-direction: column;
+}
+
+.intensity-index {
+  gap: 0.5rem;
+}
+
+.intensity-icon {
+  height: 3rem;
+  height: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.intensity-icon svg {
+  width: 3rem;
+  height: 3rem;
+}
+
+.progressBar {
+  position: relative;
+  height: 2.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  width: 100%;
+}
+
+.progress {
+  height: 100%;
+  background-color: rgb(87, 86, 86);
+  transition: width 0.5s ease-in-out;
+}
+
+.flex-container {
+  font-size: 1.3rem;
+  max-width: var(--max-width);
+  display: flex;
+  gap: 1rem;
+}
+
+.flex-container h2 {
+  height: 6rem;
+}
+
+.flex-container h3 {
+  height: 5rem;
+}
+
+.flex-container h4 {
+  height: 2rem;
+  margin-top: 2rem;
+}
+
+.flex-container h5 {
+  font-weight: 500;
+  height: 2.5rem;
+  margin-top: 2rem;
+}
+
+.flex-container p {
+  margin-bottom: 0rem;
+  margin-top: 2rem;
+}
+
+.percentage {
+  margin-left: 1rem;
+}
+
+/* loader  */
+.loader {
+  position: relative;
+  top: 2.5rem;
+  left: 3.25rem;
+  height: 5px;
+  width: 5px;
+  color: #000000;
+  box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, -10px -10px 0 5px,
+    -10px -10px 0 5px;
+  animation: loader-38 6s infinite;
+}
+
+/* animation for the loader  */
+@keyframes loader-38 {
+  0% {
+    box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, -10px -10px 0 5px,
+      -10px -10px 0 5px;
+  }
+  8.33% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px -10px 0 5px,
+      10px -10px 0 5px;
+  }
+  16.66% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      10px 10px 0 5px;
+  }
+  24.99% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  33.32% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      -10px -10px 0 5px;
+  }
+  41.65% {
+    box-shadow: 10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      10px -10px 0 5px;
+  }
+  49.98% {
+    box-shadow: 10px 10px 0 5px, 10px 10px 0 5px, 10px 10px 0 5px,
+      10px 10px 0 5px;
+  }
+  58.31% {
+    box-shadow: -10px 10px 0 5px, -10px 10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  66.64% {
+    box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  74.97% {
+    box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  83.3% {
+    box-shadow: -10px -10px 0 5px, 10px 10px 0 5px, 10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  91.63% {
+    box-shadow: -10px -10px 0 5px, -10px 10px 0 5px, -10px 10px 0 5px,
+      -10px 10px 0 5px;
+  }
+  100% {
+    box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, -10px -10px 0 5px,
+      -10px -10px 0 5px;
+  }
+}
+
+.placeholder {
+  height: 3rem;
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}
