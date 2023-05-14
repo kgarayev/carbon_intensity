@@ -1,7 +1,12 @@
 * {
   color: rgb(87, 86, 86);
   /* border: 0.01rem solid grey; */
-  background-color: white;
+  /* background-color: white; */
+  background-color: rgb(255, 252, 246);
+}
+
+main div * {
+  background-color: rgb(255, 255, 255);
 }
 
 body {
@@ -27,10 +32,16 @@ header {
 }
 
 .flags {
-  flex-grow: 1;
   display: flex;
-  min-width: 2rem;
-  max-width: 4rem;
+  width: 3rem;
+  gap: 0.25rem;
+  /* border: 0.01rem solid grey; */
+  padding-bottom: 0.5rem;
+}
+
+.flags img {
+  display: flex;
+  width: 3rem;
   gap: 0.25rem;
   /* border: 0.01rem solid grey; */
   padding-bottom: 0.5rem;
@@ -38,6 +49,14 @@ header {
 
 .main-title {
   margin-bottom: 0.5rem;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+.main-title * {
+  margin-bottom: 0.5rem;
+  background-color: #ffffff;
 }
 
 main {
@@ -219,12 +238,14 @@ main * {
   border: none;
   user-select: none;
   text-decoration: none;
+  background-color: white;
 }
 
 .input-container {
   flex-grow: 2;
   display: flex;
   align-items: center;
+  background-color: white;
 }
 
 form {
@@ -255,6 +276,7 @@ select {
   width: 100%;
 
   height: 3.5rem;
+  background-color: white;
 }
 
 option {
@@ -263,6 +285,7 @@ option {
   font-weight: 500;
 
   height: 3rem;
+  background-color: white;
 }
 
 .button {
@@ -287,6 +310,7 @@ option {
   padding: auto;
   width: 2rem;
   height: 2rem;
+  background-color: white;
 }
 
 .geo-button:hover {
@@ -319,6 +343,10 @@ option {
 .clear-button {
   /* margin-top: 1.75rem; */
   width: 7.25rem;
+}
+
+button {
+  background-color: #fff8de;
 }
 
 .small-title {
@@ -442,11 +470,13 @@ footer p {
 
 input:focus {
   outline: none;
+  background-color: white;
 }
 
 input {
   font-family: "IBM Plex Mono", monospace;
   font-size: 1.15rem;
+  background-color: white;
 }
 
 select:focus {
