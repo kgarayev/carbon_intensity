@@ -1,10 +1,14 @@
 # UK Carbon Intensity and Electricity Generation Mix Bot :bulb:
 
-### Created by Kanan Garayev
+##
+
+##
 
 ## Overview
 
 UK Carbon Intensity and Electricity Generation Mix Bot is a frontend-only webpage created using Vanilla Javascript. It gets location data from the user and displays the information about the carbon intensity and generation mix of the local electricity network for the current 30 minutes.
+
+##
 
 ## Functionality
 
@@ -12,36 +16,25 @@ The webpage allows users to input their location using a postcode, area name or 
 
 If the input is valid, the National Grid API is used to obtain data via Axios. The webpage also offers additional functionalities, including the ability to compare local data with regional data, sort the generation mix data, and reset everything on the screen using the "Clear All" button.
 
+##
+
 ## Author
 
 The webpage was created by Kanan Garayev, who used this project as an opportunity to gain in-depth knowledge of Javascript, understand its fundamentals, and push himself beyond his previous programming experience.
+
+##
 
 ## Styling
 
 The webpage is fully responsive and works on all devices. The CSS was built from scratch, without using any external libraries or frameworks.
 
-This is my first fully frontend project using Vanilla Javascript.
+##
 
-Although a very limited tim was spent on this project, it has a variety of functionalities.
-
-I have used Event LIstener to get input from the user. I have used user's input to check it's validity. If it is not valid, an error message (toast) is shown on the page. The user's input could be the current location (geolocation API), postcode or an area name. Each input is separately checked using various functions. For instance, a postcode is initially checked using regex, but also then checked whether it is a valid UK postcode using a postcode API. An area name is equally checked using another API.
-
-If valid, the data is used to obtain data from the National Grid API using axios (similar to fetch).
-
-Additional functionalities include:
-
-- Ability to compare the local data with any selected regional data (including national data)
-- Ability to sort the generation mix data
-- Ability to reset everything on screen using "Clear All" button
-
-This is my first custom-built webpage using Javascript only. This project has allowed me to learn Javascript in depth, understand the fundamentals and also push myself beyond. It has added to my previous programming experience and helped me gain confidence in using the language. Moreover, the speed of my use of the language has improved significantly.
-
-In terms of the styling, the webpage is fully responsive and works on all deviced.
-I have built the CSS from scratch, without using any external libraries or frameworks.
-
-Check out the webpage by clicking in the link :link: below:
+## Link
 
 ### :star: [UK Carbon Intensity and Electricity Generation Mix Bot](https://gb-carbon-intensity.netlify.app/) :star:
+
+##
 
 #### :sparkles: Main features:
 
