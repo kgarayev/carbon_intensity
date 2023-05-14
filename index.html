@@ -21,109 +21,130 @@
     <script type="module" src="./index.js"></script>
   </head>
   <body>
-    <header>
-      <div class="sub-header header-titles brutal main-title">
-        <h1 class="title">
-          UK Carbon Intensity and Electricity Generation Mix Bot
-        </h1>
-      </div>
-
-      <div class="sub-header">
-        <div class="sub-header header-titles">
-          <h2 class="small-title">In Your Area</h2>
-        </div>
-        <p class="disclaimer">
-          Please enable location permissions to get local data, otherwise use
-          search
-        </p>
-        <div class="form-container">
-          <form id="postcode" action="" method="post" class="form sub-header">
-            <div class="input-container brutal">
-              <input
-                id="inputBox"
-                class="input-field"
-                type="text"
-                placeholder="Enter Your Postcode or Town"
-                name="postcode"
-                tabindex="0"
-              />
-              <div>
-                <button class="offButton geo-button" id="geolocationButton">
-                  <img
-                    src="./icons/geolocation.svg"
-                    alt="geo-icon"
-                    class="geo-icon"
+    <div class="sub-header header-titles brutal main-title">
+      <h1 class="title">
+        UK Carbon Intensity and Electricity Generation Mix Bot
+      </h1>
+    </div>
+    <div class="body-container">
+      <header>
+        <div class="sub-header header-top">
+          <div class="first-part wrapper">
+            <div class="sub-header header-titles">
+              <h2 class="small-title">In Your Area</h2>
+            </div>
+            <p class="disclaimer">
+              Please enable location permissions to get local data, otherwise
+              use search
+            </p>
+            <div class="form-container">
+              <form
+                id="postcode"
+                action=""
+                method="post"
+                class="form sub-header"
+              >
+                <div class="input-container brutal">
+                  <input
+                    id="inputBox"
+                    class="input-field"
+                    type="text"
+                    placeholder="Enter Your Postcode or Town"
+                    name="postcode"
+                    tabindex="0"
                   />
+                  <div>
+                    <button class="offButton geo-button" id="geolocationButton">
+                      <img
+                        src="./icons/geolocation.svg"
+                        alt="geo-icon"
+                        class="geo-icon"
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                <div class="button">
+                  <button
+                    class="button-54 button brutal"
+                    role="button"
+                    id="checkButton"
+                    disabled
+                    tabindex="1"
+                  >
+                    Check
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="second-part wrapper">
+            <div class="sub-header header-titles">
+              <h2 class="small-title">Compare to Regions in Britain</h2>
+            </div>
+
+            <div class="form-container" id="compare">
+              <form
+                id="regions"
+                action=""
+                method="post"
+                class="form sub-header"
+              >
+                <div class="input-container">
+                  <select
+                    id="regionsList"
+                    name="regions"
+                    disabled
+                    class="offButton brutal"
+                  >
+                    <option value="0" disabled selected>
+                      Select a British Region
+                    </option>
+                  </select>
+                </div>
+
+                <div class="button">
+                  <button
+                    class="button-54 offButton brutal"
+                    role="button"
+                    id="compareButton"
+                    name="regions"
+                    disabled
+                  >
+                    Compare
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="third-part wrapper">
+            <div class="sub-header header-titles">
+              <h2 class="small-title">Sort or Clear Data</h2>
+            </div>
+
+            <div class="header-bottom">
+              <div class="sort">
+                <select class="offButton brutal" id="sort" disabled>
+                  <option value="placeholder" disabled selected>Sort</option>
+                  <option value="0">Default</option>
+                  <option value="ascending">Ascending</option>
+                  <option value="descending">Descending</option>
+                </select>
+              </div>
+
+              <div class="button clear-button sub-header">
+                <button
+                  class="button-54 offButton brutal"
+                  role="button"
+                  id="clearButton"
+                  disabled
+                >
+                  Clear All
                 </button>
               </div>
             </div>
-
-            <div class="button">
-              <button
-                class="button-54 button brutal"
-                role="button"
-                id="checkButton"
-                disabled
-                tabindex="1"
-              >
-                Check
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <div class="sub-header header-titles">
-          <h2 class="small-title">Compare to Regions in Britain</h2>
-        </div>
-
-        <div class="form-container" id="compare">
-          <form id="regions" action="" method="post" class="form sub-header">
-            <div class="input-container">
-              <select
-                id="regionsList"
-                name="regions"
-                disabled
-                class="offButton brutal"
-              >
-                <option value="0" disabled selected>
-                  Select a British Region
-                </option>
-              </select>
-            </div>
-
-            <div class="button">
-              <button
-                class="button-54 offButton brutal"
-                role="button"
-                id="compareButton"
-                name="regions"
-                disabled
-              >
-                Compare
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <div class="header-bottom">
-          <div class="button clear-button sub-header">
-            <button
-              class="button-54 offButton brutal"
-              role="button"
-              id="clearButton"
-              disabled
-            >
-              Clear All
-            </button>
-          </div>
-
-          <div class="sort">
-            <select class="offButton brutal" id="sort" disabled>
-              <option value="placeholder" disabled selected>Sort</option>
-              <option value="0">Default</option>
-              <option value="ascending">Ascending</option>
-              <option value="descending">Descending</option>
-            </select>
           </div>
         </div>
 
@@ -147,15 +168,15 @@
             <div id="progress" class="progress"></div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <main>
-      <div id="spinner" class="spinner"></div>
-      <p class="placeholder"></p>
+      <main>
+        <div id="spinner" class="spinner"></div>
+        <p class="placeholder"></p>
 
-      <div id="container" class="flex-container"></div>
-    </main>
+        <div id="container" class="flex-container"></div>
+      </main>
+    </div>
 
     <footer>
       <p>&copy Kanan Garayev 2023</p>
