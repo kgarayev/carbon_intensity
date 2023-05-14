@@ -1,38 +1,26 @@
-# UK Carbon Intensity and Electricity Generation Mix Bot :bulb:
+# :bulb: UK Carbon Intensity and Electricity Generation Mix Bot :robot:
 
-##
-
-## Overview
+## :book: Overview
 
 UK Carbon Intensity and Electricity Generation Mix Bot is a frontend-only webpage created using Vanilla Javascript. It gets location data from the user and displays the information about the carbon intensity and generation mix of the local electricity network for the current 30 minutes.
 
-##
-
-## Functionality
+## :gear: Functionality
 
 The webpage allows users to input their location using a postcode, area name or current location via geolocation API. Event listeners and various functions are used to validate the input, including regex, and two APIs to verify postcodes and area names.
 
 If the input is valid, the National Grid API is used to obtain data via Axios. The webpage also offers additional functionalities, including the ability to compare local data with regional data, sort the generation mix data, and reset everything on the screen using the "Clear All" button.
 
-##
-
-## Author
+## :bust_in_silhouette: Author
 
 The webpage was created by Kanan Garayev, who used this project as an opportunity to gain in-depth knowledge of Javascript, understand its fundamentals, and push himself beyond his previous programming experience.
 
-##
-
-## Styling
+## :art: Styling
 
 The webpage is fully responsive and works on all devices. The CSS was built from scratch, without using any external libraries or frameworks.
 
-##
-
-## Link
+## :link: Link
 
 ### :star: [UK Carbon Intensity and Electricity Generation Mix Bot](https://gb-carbon-intensity.netlify.app/) :star:
-
-##
 
 #### :sparkles: Main features:
 
