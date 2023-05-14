@@ -2,8 +2,6 @@
 
 ##
 
-##
-
 ## Overview
 
 UK Carbon Intensity and Electricity Generation Mix Bot is a frontend-only webpage created using Vanilla Javascript. It gets location data from the user and displays the information about the carbon intensity and generation mix of the local electricity network for the current 30 minutes.
