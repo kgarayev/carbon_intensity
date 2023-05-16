@@ -72,7 +72,15 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
   if (userInput) {
     locationCheck(userInput);
   } else {
+    regionDropDown.disabled = true;
+    compareButton.disabled = true;
+    regionDropDown.classList.add("offButton");
+    regionDropDown.classList.remove("onButton");
+    compareButton.classList.add("offButton");
+    compareButton.classList.remove("onButton");
+
     toastError(errorText[0]);
+    log("error here");
     // errorMessage.innerHTML = errorText[0];
     return;
   }
@@ -95,6 +103,12 @@ inputBox.addEventListener("keydown", (event) => {
       locationCheck(userInput);
     } else {
       toastError(errorText[0]);
+      regionDropDown.disabled = true;
+      compareButton.disabled = true;
+      regionDropDown.classList.add("offButton");
+      regionDropDown.classList.remove("onButton");
+      compareButton.classList.add("offButton");
+      compareButton.classList.remove("onButton");
       // errorMessage.innerHTML = errorText[0];
       return;
     }
@@ -290,14 +304,50 @@ const locationCheck = async (input) => {
         }
       }
     } else {
+      regionDropDown.disabled = true;
+      compareButton.disabled = true;
+      regionDropDown.classList.add("offButton");
+      regionDropDown.classList.remove("onButton");
+      compareButton.classList.add("offButton");
+      compareButton.classList.remove("onButton");
+      sortList.disabled = true;
+      sortList.classList.add("offButton");
+      sortList.classList.remove("onButton");
+      clearButton.disabled = true;
+      clearButton.classList.add("offButton");
+      clearButton.classList.remove("onButton");
       toastError(errorText[0]);
       // errorMessage.innerHTML = errorText[0];
       return false;
     }
   } catch (error) {
+    regionDropDown.disabled = true;
+    compareButton.disabled = true;
+    regionDropDown.classList.add("offButton");
+    regionDropDown.classList.remove("onButton");
+    compareButton.classList.add("offButton");
+    compareButton.classList.remove("onButton");
+    sortList.disabled = true;
+    sortList.classList.add("offButton");
+    sortList.classList.remove("onButton");
+    clearButton.disabled = true;
+    clearButton.classList.add("offButton");
+    clearButton.classList.remove("onButton");
     toastError(errorText[0]);
     // errorMessage.innerHTML = errorText[0];
   }
+  regionDropDown.disabled = true;
+  compareButton.disabled = true;
+  regionDropDown.classList.add("offButton");
+  regionDropDown.classList.remove("onButton");
+  compareButton.classList.add("offButton");
+  compareButton.classList.remove("onButton");
+  sortList.disabled = true;
+  sortList.classList.add("offButton");
+  sortList.classList.remove("onButton");
+  clearButton.disabled = true;
+  clearButton.classList.add("offButton");
+  clearButton.classList.remove("onButton");
   toastError(errorText[0]);
   // errorMessage.innerHTML = errorText[0];
 };
