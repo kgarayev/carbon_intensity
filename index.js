@@ -55,6 +55,7 @@ document.addEventListener("input", (event) => {
   inputBox.classList.add("onButton");
 });
 
+// making sure that the check button is in focus
 checkButton.focus();
 
 // submit the final user input and validate
@@ -72,6 +73,7 @@ document.getElementById("checkButton").addEventListener("click", (event) => {
   if (userInput) {
     locationCheck(userInput);
   } else {
+    // turning on and off some button and drop down lists
     regionDropDown.disabled = true;
     compareButton.disabled = true;
     regionDropDown.classList.add("offButton");
@@ -103,6 +105,8 @@ inputBox.addEventListener("keydown", (event) => {
       locationCheck(userInput);
     } else {
       toastError(errorText[0]);
+
+      // turning on and off some button and drop down lists
       regionDropDown.disabled = true;
       compareButton.disabled = true;
       regionDropDown.classList.add("offButton");
@@ -202,6 +206,8 @@ clearButton.addEventListener("click", (event) => {
   container.innerHTML = "";
   inputBox.value = "";
   regionDropDown.selectedIndex = 0;
+
+  // turning on and off some button and drop down lists
   checkButton.disabled = true;
   regionDropDown.disabled = true;
   compareButton.disabled = true;
@@ -304,6 +310,7 @@ const locationCheck = async (input) => {
         }
       }
     } else {
+      // turning on and off some button and drop down lists
       regionDropDown.disabled = true;
       compareButton.disabled = true;
       regionDropDown.classList.add("offButton");
@@ -321,6 +328,7 @@ const locationCheck = async (input) => {
       return false;
     }
   } catch (error) {
+    // turning on and off some button and drop down lists
     regionDropDown.disabled = true;
     compareButton.disabled = true;
     regionDropDown.classList.add("offButton");
@@ -336,6 +344,7 @@ const locationCheck = async (input) => {
     toastError(errorText[0]);
     // errorMessage.innerHTML = errorText[0];
   }
+  // turning on and off some button and drop down lists
   regionDropDown.disabled = true;
   compareButton.disabled = true;
   regionDropDown.classList.add("offButton");
@@ -513,6 +522,7 @@ const displayData = async (data, elementId, toSort = false) => {
   clearToast();
   spinner.innerHTML = ``;
 
+  // turning on and off some button and drop down lists
   regionDropDown.disabled = false;
   regionDropDown.classList.remove("offButton");
   regionDropDown.classList.add("onButton");
@@ -567,6 +577,7 @@ const displayData = async (data, elementId, toSort = false) => {
 
     // document.getElementById(container.id).innerHTML = "";
 
+    // updating the DOM
     updateDom(container.id, `div`, ``, elementId);
 
     const brutalElement = document.getElementById(elementId);
@@ -692,8 +703,7 @@ const setProgress = (element, percent) => {
   element.style.width = 1 + percent + "%";
 };
 
-// toasting
-
+// toast errors
 const toast = document.getElementById("toast");
 const closeIcon = document.getElementById("toastClose");
 const progress = document.getElementById("progress");
@@ -703,6 +713,7 @@ const toastWrapper = document.getElementById("toastDiv");
 let timer1;
 let timer2;
 
+// function to make the toast error pop up
 const toastError = (message) => {
   log(message);
   toastWrapper.style.height = "9rem";
@@ -721,6 +732,7 @@ const toastError = (message) => {
   }, 5300);
 };
 
+// listen to the close click of the toast error
 closeIcon.addEventListener("click", () => {
   toast.classList.remove("active");
   progress.classList.remove("active");
@@ -730,6 +742,7 @@ closeIcon.addEventListener("click", () => {
   clearTimeout(timer2);
 });
 
+// clear the toast error from the screen
 const clearToast = () => {
   toast.classList.remove("active");
   progress.classList.remove("active");
