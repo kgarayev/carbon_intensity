@@ -127,37 +127,37 @@ compareButton.addEventListener("click", (event) => {
     writeData(selectedOption, REGIONAL_API_URL, "regional");
   }
 
-  regionDropDown.disabled = true;
-  compareButton.disabled = true;
-  regionDropDown.classList.remove("offButton");
-  regionDropDown.classList.add("onButton");
+  // regionDropDown.disabled = true;
+  // compareButton.disabled = true;
+  // regionDropDown.classList.remove("offButton");
+  // regionDropDown.classList.add("onButton");
 
-  compareButton.classList.add("offButton");
-  compareButton.classList.remove("onButton");
+  // compareButton.classList.add("offButton");
+  // compareButton.classList.remove("onButton");
 
   sortList.value = "placeholder";
 });
 
 // event listener to listen to sort selection
-sortList.addEventListener("change", (event) => {
+sortList.addEventListener("change", async (event) => {
   // sortedMix.options = {};
   // sortedMix.default = {};
 
-  log(event.target.value);
+  // log(event.target.value);
   const sortOrder = event.target.value;
 
   container.innerHTML = ``;
 
-  log(sortOrder);
+  // log(sortOrder);
 
   if (sortOrder == 0) {
-    log("deault option selected");
+    // log("deault option selected");
     for (let key in state) {
-      displayData(state[key], key, false);
+      await displayData(state[key], key, false);
     }
-    log(sortedMix);
+    // log(sortedMix);
   } else {
-    log("sort option selected");
+    // log("sort option selected");
     for (let key in sortedMix.options) {
       switch (sortOrder) {
         case "ascending":
@@ -174,10 +174,10 @@ sortList.addEventListener("change", (event) => {
     }
 
     for (let key in state) {
-      displayData(state[key], key, true);
+      await displayData(state[key], key, true);
     }
 
-    log(sortedMix);
+    // log(sortedMix);
   }
 });
 
@@ -256,7 +256,7 @@ const checkUKPostcode = async (input) => {
     const isValidUKPostcode = await axios.get(
       UK_POSTCODE_VALIDATOR.replace(`{postcode}`, input)
     );
-    log(isValidUKPostcode.status);
+    // log(isValidUKPostcode.status);
     return true;
   } catch (error) {
     return false;
@@ -267,7 +267,7 @@ const checkUKPostcode = async (input) => {
 const locationCheck = async (input) => {
   const isValidPostcode = await postcodeValidator(input);
   const isPostcodeUK = await checkUKPostcode(input);
-  log(isPostcodeUK);
+  // log(isPostcodeUK);
   if (isValidPostcode && isPostcodeUK) {
     writeData(finalPostcode, POSTCODE_API_URL, "local");
     return;
@@ -278,7 +278,7 @@ const locationCheck = async (input) => {
     const { data } = await axios.get(
       GEOCODING_API_URL.replace(`{address}`, input)
     );
-    log(data);
+    // log(data);
     if (data.length > 0) {
       for (let i = 0; i < data.length; i++) {
         if (data[i].display_name.includes("United Kingdom")) {
@@ -318,7 +318,7 @@ const geoToPostcode = async ({ coords }) => {
 
   try {
     const { data } = await axios.get(urlCopy);
-    log(data);
+    // log(data);
 
     finalPostcode = data.result[0].postcode
       .trim()
@@ -363,7 +363,7 @@ geolocationButton.addEventListener("click", (event) => {
   sortedMix.options = {};
   sortedMix.default = {};
 
-  log(sortedMix);
+  // log(sortedMix);
 
   sortList.value = "placeholder";
 
@@ -414,7 +414,7 @@ const getData = async (locationData, url) => {
       nationalGeneration["intensity"] = nationalIntensity;
       nationalApiData = { shortname: "National", data: [nationalGeneration] };
 
-      log(nationalApiData);
+      // log(nationalApiData);
       return nationalApiData;
     } else {
       // for regional or local data
@@ -459,30 +459,53 @@ const getData = async (locationData, url) => {
 };
 
 // display the obtained data for the user
-const displayData = (data, elementId, toSort = false) => {
+const displayData = async (data, elementId, toSort = false) => {
   clearToast();
   spinner.innerHTML = ``;
 
-  const containerChildren = container.querySelectorAll("div");
+  regionDropDown.disabled = false;
+  regionDropDown.classList.remove("offButton");
+  regionDropDown.classList.add("onButton");
+  compareButton.disabled = false;
+  compareButton.classList.remove("offButton");
+  compareButton.classList.add("onButton");
+  clearButton.disabled = false;
+  clearButton.classList.remove("offButton");
+  clearButton.classList.add("onButton");
 
-  if (containerChildren.length >= 1) {
-    regionDropDown.disabled = true;
-    compareButton.disabled = true;
-    regionDropDown.classList.add("offButton");
-    regionDropDown.classList.remove("onButton");
-    compareButton.classList.add("offButton");
-    compareButton.classList.remove("onButton");
-  } else {
-    regionDropDown.disabled = false;
-    regionDropDown.classList.remove("offButton");
-    regionDropDown.classList.add("onButton");
-    compareButton.disabled = false;
-    compareButton.classList.remove("offButton");
-    compareButton.classList.add("onButton");
-    clearButton.disabled = false;
-    clearButton.classList.remove("offButton");
-    clearButton.classList.add("onButton");
+  const containerChildren = container.querySelectorAll("div");
+  // log(containerChildren);
+
+  const children = container.children;
+  // log(children);
+  // log(children.length);
+  // log(children[1]);
+
+  if (children.length > 1) {
+    container.removeChild(children[1]);
   }
+
+  // if (containerChildren.length > 1) {
+  //   log(containerChildren[1]);
+  //   secondChild.innerHTML = "";
+  //   secondChild.innerHTML = "";
+  //   regionDropDown.disabled = true;
+  //   compareButton.disabled = true;
+  //   regionDropDown.classList.add("offButton");
+  //   regionDropDown.classList.remove("onButton");
+  //   compareButton.classList.add("offButton");
+  //   compareButton.classList.remove("onButton");
+  // } else {
+  //   regionDropDown.disabled = false;
+  //   regionDropDown.classList.remove("offButton");
+  //   regionDropDown.classList.add("onButton");
+  //   compareButton.disabled = false;
+  //   compareButton.classList.remove("offButton");
+  //   compareButton.classList.add("onButton");
+  //   clearButton.disabled = false;
+  //   clearButton.classList.remove("offButton");
+  //   clearButton.classList.add("onButton");
+  // }
 
   if (data) {
     const region = data.shortname;
@@ -524,14 +547,14 @@ const displayData = (data, elementId, toSort = false) => {
     updateDom(elementId, `h4`, `Electricity Generation Mix`);
 
     if (toSort) {
-      log(sortedMix);
+      // log(sortedMix);
       generationMix = sortedMix.options[elementId].slice();
-      log(generationMix);
+      // log(generationMix);
     } else {
-      log(sortedMix);
+      // log(sortedMix);
       sortedMix.default[elementId] = generationMix.slice();
       sortedMix.options[elementId] = generationMix.slice();
-      log(sortedMix);
+      // log(sortedMix);
     }
 
     generationMix.forEach((item) => {
@@ -598,8 +621,8 @@ const writeData = async (locationData, url, elementId) => {
       const data = await getData(locationData, url);
       // log(data);
       state[elementId] = Object.assign({}, data);
-      log(state);
-      displayData(data, elementId);
+      // log(state);
+      await displayData(data, elementId);
       return;
     }
     return;

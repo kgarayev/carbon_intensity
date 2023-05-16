@@ -69,7 +69,8 @@ main * {
 }
 
 .flex-container h2 {
-  height: 6rem;
+  height: 7.5rem;
+  /* margin-bottom: 2rem; */
 }
 
 .flex-container h3 {
