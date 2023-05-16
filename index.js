@@ -316,16 +316,22 @@ const geoToPostcode = async ({ coords }) => {
     .replace("{longitude}", longitude)
     .replace("{latitude}", latitude);
 
-  const { data } = await axios.get(urlCopy);
+  try {
+    const { data } = await axios.get(urlCopy);
+    log(data);
 
-  finalPostcode = data.result[0].postcode
-    .trim()
-    .replace(/\s+/g, "")
-    .toUpperCase()
-    .slice(0, -3);
+    finalPostcode = data.result[0].postcode
+      .trim()
+      .replace(/\s+/g, "")
+      .toUpperCase()
+      .slice(0, -3);
 
-  log(finalPostcode);
-  writeData(finalPostcode, POSTCODE_API_URL, "local");
+    log(finalPostcode);
+    writeData(finalPostcode, POSTCODE_API_URL, "local");
+  } catch (error) {
+    log(error);
+    toastError(errorText[1]);
+  }
 };
 
 // geolocation error function
