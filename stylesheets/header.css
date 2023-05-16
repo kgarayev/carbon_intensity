@@ -127,6 +127,7 @@ option {
   justify-content: center;
   align-items: center;
   border: none;
+  cursor: pointer;
 }
 
 .input-container div {
@@ -140,6 +141,7 @@ option {
 .geo-button:hover {
   filter: opacity(100%);
   color: rgb(87, 86, 86);
+  cursor: pointer;
 }
 
 .geo-icon {
@@ -163,12 +165,6 @@ option {
 
 .offButton {
   color: rgb(185, 185, 185);
-}
-
-/* clear button styling  */
-.clear-button {
-  width: 7.25rem;
-  background-color: #fff7d9;
 }
 
 /* small title styling  */
@@ -196,15 +192,27 @@ option {
   height: 3.65rem;
   margin: 0;
   width: 7.25rem;
+  cursor: pointer;
 }
 
 .button-54:active {
   box-shadow: 0px 0px 0px 0px;
   top: 3px;
   left: 3px;
+  cursor: pointer;
 }
 
-.material-symbols-outlined {
+/* clear button styling  */
+.clear-button {
+  width: 7.25rem;
+  cursor: pointer;
+}
+
+.odd-button {
+  /* color: black; */
+  background-color: #ffeeee;
+}
+v .material-symbols-outlined {
   cursor: pointer;
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
@@ -243,9 +251,10 @@ option:focus {
 
 .header-bottom {
   display: flex;
+  flex-direction: column;
   font-size: 1.25rem;
   justify-content: flex-start;
-  align-items: center;
+  /* align-items: center; */
   gap: 1rem;
   max-width: var(--max-width);
   margin-left: 0;

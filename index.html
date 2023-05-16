@@ -156,7 +156,11 @@
                     tabindex="0"
                   />
                   <div>
-                    <button class="offButton geo-button" id="geolocationButton">
+                    <button
+                      type="button"
+                      class="offButton geo-button"
+                      id="geolocationButton"
+                    >
                       <img
                         src="./icons/geolocation.svg"
                         alt="geo-icon"
@@ -168,6 +172,7 @@
 
                 <div class="button">
                   <button
+                    type="button"
                     class="button-54 button brutal"
                     role="button"
                     id="checkButton"
@@ -208,6 +213,7 @@
 
                 <div class="button">
                   <button
+                    type="button"
                     class="button button-54 offButton brutal"
                     role="button"
                     id="compareButton"
@@ -223,7 +229,7 @@
 
           <div class="third-part wrapper">
             <div class="sub-header header-titles">
-              <h2 class="small-title">Sort or Clear Data</h2>
+              <h2 class="small-title">Sort Data</h2>
             </div>
 
             <div class="header-bottom">
@@ -235,15 +241,22 @@
                   <option value="descending">Descending</option>
                 </select>
               </div>
+            </div>
 
+            <div class="sub-header header-titles">
+              <h2 class="small-title">Clear All Data</h2>
+            </div>
+
+            <div class="header-bottom">
               <div class="button clear-button sub-header">
                 <button
-                  class="button button-54 offButton brutal"
+                  type="button"
+                  class="button button-54 offButton brutal odd-button"
                   role="button"
                   id="clearButton"
                   disabled
                 >
-                  Clear All
+                  Clear
                 </button>
               </div>
             </div>
