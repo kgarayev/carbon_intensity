@@ -1,5 +1,13 @@
 # :bulb: UK Carbon Intensity and Electricity Generation Mix Bot :robot:
 
+## :computer: Tech Used
+
+- Programming Languages: Vanilla JavaScript
+- 3rd Party Libraries: Axios, Joi Validator
+- Web Development: HTML, CSS
+- Version Control: Git
+- API: National Grid API, Geolocation API, UK Postcode Checker API, UK Address Checker API
+
 ## :book: Overview
 
 UK Carbon Intensity and Electricity Generation Mix Bot is a frontend-only webpage created using Vanilla Javascript. It gets location data from the user and displays the information about the carbon intensity and generation mix of the local electricity network for the current 30 minutes.
