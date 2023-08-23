@@ -70,6 +70,8 @@ export const REGIONAL_API_URL = `https://api.carbonintensity.org.uk/regional/reg
 // set a national API URL for intensity
 export const NATIONAL_API_URL_INTENSITY = `https://api.carbonintensity.org.uk/intensity`;
 
+export const PLACEHOLDER = `check`;
+
 // set a national API URL for generation mix
 export const NATIONAL_API_URL_GENERATION = `https://api.carbonintensity.org.uk/generation`;
 
