@@ -119,6 +119,8 @@ inputBox.addEventListener("keydown", (event) => {
   }
 });
 
+// check 
+
 // listen to compare button and call the API function
 compareButton.addEventListener("click", (event) => {
   event.preventDefault();
