@@ -2,7 +2,8 @@
 
 ## :computer: Tech Used
 
-- Programming Languages: Vanilla JavaScript
+- Programming Languages: Vanilla JavaScript, Python
+- Backend: Python Flask, Jinja, SQLite
 - 3rd Party Libraries: Axios, Joi Validator
 - Web Development: HTML, CSS
 - Version Control: Git
@@ -10,7 +11,7 @@
 
 ## :book: Overview
 
-UK Carbon Intensity and Electricity Generation Mix Bot is a frontend-only webpage created using Vanilla Javascript. It gets location data from the user and displays the information about the carbon intensity and generation mix of the local electricity network for the current 30 minutes.
+UK Carbon Intensity and Electricity Generation Mix Bot is a web app created using Vanilla Javascript and Python Flask. It gets location data from the user and displays the information about the carbon intensity and generation mix of the local electricity network for the current 30 minutes.
 
 ## :gear: Functionality
 
